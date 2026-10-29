@@ -281,16 +281,16 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
             </div>
 
             {/* Columna Derecha: Silueta y Máscara a ras del borde inferior */}
-            <div className="lg:col-span-5 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200">
+            <div className="lg:col-span-5 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200 overflow-hidden">
               
               {/* La Máscara de Color (Contenedor redondeado arriba, a ras abajo) */}
-              <div className="absolute w-[75%] sm:w-[80%] md:w-[75%] lg:w-[82%] max-w-[360px] h-[78%] sm:h-[82%] bottom-0 rounded-t-[38px] sm:rounded-t-[48px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
+              <div className="absolute w-[80%] sm:w-[85%] md:w-[80%] lg:w-[88%] max-w-[420px] xl:max-w-[450px] h-[78%] sm:h-[82%] bottom-0 rounded-t-[44px] sm:rounded-t-[56px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
 
-              {/* Imagen con Fondo Transparente terminando EXACTAMENTE en el borde inferior */}
+              {/* Imagen con Fondo Transparente: De la mitad hacia arriba, más grande y bajada al ras */}
               <img
                 src={sofiaCutout}
                 alt="Ab. Sofía Segura Santana - Abogada Penalista y Tránsito"
-                className="relative z-10 w-auto max-h-[380px] sm:max-h-[480px] md:max-h-[540px] lg:max-h-[590px] xl:max-h-[640px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)] block align-bottom m-0 p-0"
+                className="relative z-10 w-auto max-h-[440px] sm:max-h-[520px] md:max-h-[580px] lg:max-h-[640px] xl:max-h-[700px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)] block align-bottom m-0 p-0 translate-y-3 sm:translate-y-4 lg:translate-y-5"
               />
 
             </div>
@@ -444,165 +444,173 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
       </section>
 
       {/* =========================================================================
-          SECCIÓN 3: SOBRE MÍ (2 COLUMNAS: IMAGEN Y TEXTO DE IGUAL ALTURA VERTICAL)
+          SECCIÓN 3: SOBRE MÍ (2 COLUMNAS: IMAGEN COMPLETA Y TEXTO ESTRUCTURADO)
           ========================================================================= */}
-      <section className="w-full bg-[#FAF7F2] pt-6 sm:pt-10 lg:pt-12 pb-0 overflow-hidden animate-fade-in">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-stretch">
-          
-          {/* Columna Izquierda: Imagen a ras del margen izquierdo y a ras del fondo de sección */}
-          <div className="relative w-full h-[280px] sm:h-[380px] lg:h-full min-h-[280px] sm:min-h-[380px] lg:min-h-[460px] overflow-hidden">
-            <img
-              src={sofiaDeskLandscape}
-              alt="Ab. Sofía Segura Santana en su despacho"
-              className="absolute inset-0 w-full h-full object-cover object-center rounded-none shadow-none transform hover:scale-[1.01] transition-transform duration-500"
-            />
-          </div>
-
-          {/* Columna Derecha: Texto estructurado que define la altura vertical exacta */}
-          <div className="w-full px-5 sm:px-10 lg:px-12 xl:px-20 py-8 sm:py-10 lg:py-10 flex flex-col justify-center items-start text-left">
+      <section className="w-full bg-[#FAF7F2] py-10 sm:py-14 lg:py-18 overflow-hidden animate-fade-in">
+        <div className="max-w-[1550px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
             
-            <div className="text-xs font-bold tracking-widest text-[#aa8640] uppercase mb-2">
-              SOBRE MÍ
-            </div>
-            
-            <h2 className="font-['Cinzel',serif] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-[#1c2237] leading-tight mb-3">
-              Ab. Sofía Segura Santana
-            </h2>
-
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5 font-normal max-w-xl">
-              Ejerzo el patrocinio jurídico penal fundamentado en la ética procesal, el rigor dogmático y el respeto irrestricto de las garantías constitucionales. Mi compromiso es brindar una defensa técnica responsable, inmediata y frontal, apegada al Código Orgánico Integral Penal y los tratados de derechos humanos.
-            </p>
-
-            {/* 3 Viñetas con Iconos elegantes */}
-            <div className="space-y-3 mb-6 w-full max-w-xl">
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
-                <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
-                  <Scale className="w-3.5 h-3.5" />
-                </div>
-                <span>Experta en Derecho Penal y Tránsito con más de 5 años de experiencia</span>
-              </div>
-
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
-                <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
-                  <GraduationCap className="w-3.5 h-3.5" />
-                </div>
-                <span>Maestrías en Derecho Procesal Penal & Constitucional (Casa Grande) · Grado en Uniandes</span>
-              </div>
-
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
-                <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                </div>
-                <span>Atención en Buena Fe (Los Ríos) y cobertura a nivel nacional</span>
+            {/* Columna Izquierda: Fotografía Completa en Despacho (tamaño calibrado sin recortar la frente) */}
+            <div className="w-full flex items-center justify-center">
+              <div className="relative w-full max-w-[560px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-[#c5a059]/40 bg-[#101626] group">
+                <img
+                  src={sofiaDeskLandscape}
+                  alt="Ab. Sofía Segura Santana en su despacho"
+                  className="w-full h-auto block object-cover object-top transform group-hover:scale-[1.01] transition-transform duration-500"
+                />
               </div>
             </div>
 
-            {/* Botón Píldora: Conocer Más */}
-            <button
-              onClick={() => onSelectTab('perfil')}
-              className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#1c2237] hover:bg-[#c5a059] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              Conocer Más Sobre Mí
-            </button>
+            {/* Columna Derecha: Texto estructurado que define la altura vertical exacta */}
+            <div className="w-full flex flex-col justify-center items-start text-left">
+              
+              <div className="text-xs font-bold tracking-widest text-[#aa8640] uppercase mb-2">
+                SOBRE MÍ
+              </div>
+              
+              <h2 className="font-['Cinzel',serif] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-[#1c2237] leading-tight mb-3">
+                Ab. Sofía Segura Santana
+              </h2>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5 font-normal max-w-xl">
+                Ejerzo el patrocinio jurídico penal fundamentado en la ética procesal, el rigor dogmático y el respeto irrestricto de las garantías constitucionales. Mi compromiso es brindar una defensa técnica responsable, inmediata y frontal, apegada al Código Orgánico Integral Penal y los tratados de derechos humanos.
+              </p>
+
+              {/* 3 Viñetas con Iconos elegantes */}
+              <div className="space-y-3 mb-6 w-full max-w-xl">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
+                  <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
+                    <Scale className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Experta en Derecho Penal y Tránsito con más de 5 años de experiencia</span>
+                </div>
+
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
+                  <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
+                    <GraduationCap className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Maestrías en Derecho Procesal Penal & Constitucional (Casa Grande) · Grado en Uniandes</span>
+                </div>
+
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
+                  <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Atención en Buena Fe (Los Ríos) y cobertura a nivel nacional</span>
+                </div>
+              </div>
+
+              {/* Botón Píldora: Conocer Más */}
+              <button
+                onClick={() => onSelectTab('perfil')}
+                className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#1c2237] hover:bg-[#c5a059] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Conocer Más Sobre Mí
+              </button>
+
+            </div>
 
           </div>
-
         </div>
       </section>
 
       {/* =========================================================================
-          SECCIÓN 4: METODOLOGÍA PROCESAL (2 COLUMNAS: IMAGEN Y TEXTO DE IGUAL ALTURA VERTICAL)
+          SECCIÓN 4: METODOLOGÍA PROCESAL (2 COLUMNAS: TEXTO E IMAGEN COMPLETA)
           ========================================================================= */}
-      <section className="w-full bg-white pt-0 pb-8 sm:pb-10 lg:pb-12 overflow-hidden animate-fade-in">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-stretch">
-          
-          {/* Columna Izquierda: Metodología con línea de tiempo y texto que define la altura vertical exacta */}
-          <div className="w-full px-5 sm:px-10 lg:px-12 xl:px-20 py-8 sm:py-10 lg:py-10 flex flex-col justify-center items-start text-left order-2 lg:order-1">
+      <section className="w-full bg-white py-10 sm:py-14 lg:py-18 overflow-hidden animate-fade-in">
+        <div className="max-w-[1550px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
             
-            <div className="text-xs font-bold tracking-widest text-[#aa8640] uppercase mb-2">
-              METODOLOGÍA DE DEFENSA PENAL
-            </div>
-            
-            <h2 className="font-['Cinzel',serif] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-[#1c2237] leading-tight mb-6">
-              Un Proceso Estratégico, Paso a Paso
-            </h2>
-
-            {/* Pasos ordenados con iconos temáticos al lado izquierdo de cada párrafo */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-xl">
+            {/* Columna Izquierda: Metodología con línea de tiempo y texto */}
+            <div className="w-full flex flex-col justify-center items-start text-left order-2 lg:order-1">
               
-              {/* Paso 1: Evaluación Inicial */}
-              <div className="flex flex-col items-start text-left">
-                <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
-                  Evaluación Inicial
-                </h3>
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
-                    <FileSearch className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
-                  </div>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
-                    Revisión preliminar de los hechos, estado procesal y medidas cautelares urgentes.
-                  </p>
-                </div>
+              <div className="text-xs font-bold tracking-widest text-[#aa8640] uppercase mb-2">
+                METODOLOGÍA DE DEFENSA PENAL
               </div>
+              
+              <h2 className="font-['Cinzel',serif] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-[#1c2237] leading-tight mb-6">
+                Un Proceso Estratégico, Paso a Paso
+              </h2>
 
-              {/* Paso 2: Teoría del Caso */}
-              <div className="flex flex-col items-start text-left">
-                <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
-                  Teoría del Caso
-                </h3>
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
-                    <Compass className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+              {/* Pasos ordenados con iconos temáticos al lado izquierdo de cada párrafo */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-xl">
+                
+                {/* Paso 1: Evaluación Inicial */}
+                <div className="flex flex-col items-start text-left">
+                  <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
+                    Evaluación Inicial
+                  </h3>
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
+                      <FileSearch className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
+                      Revisión preliminar de los hechos, estado procesal y medidas cautelares urgentes.
+                    </p>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
-                    Auditoría fiscal rigurosa, acopio de pruebas de descargo y peritajes independientes.
-                  </p>
                 </div>
-              </div>
 
-              {/* Paso 3: Litigio Oral */}
-              <div className="flex flex-col items-start text-left">
-                <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
-                  Litigio Oral
-                </h3>
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
-                    <Gavel className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                {/* Paso 2: Teoría del Caso */}
+                <div className="flex flex-col items-start text-left">
+                  <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
+                    Teoría del Caso
+                  </h3>
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
+                      <Compass className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
+                      Auditoría fiscal rigurosa, acopio de pruebas de descargo y peritajes independientes.
+                    </p>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
-                    Defensa contundente en estrados judiciales ante jueces, tribunales y fiscalía.
-                  </p>
                 </div>
-              </div>
 
-              {/* Paso 4: Recursos y Libertad */}
-              <div className="flex flex-col items-start text-left">
-                <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
-                  Recursos y Libertad
-                </h3>
-                <div className="flex items-center gap-3 w-full">
-                  <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
-                    <Unlock className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                {/* Paso 3: Litigio Oral */}
+                <div className="flex flex-col items-start text-left">
+                  <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
+                    Litigio Oral
+                  </h3>
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
+                      <Gavel className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
+                      Defensa contundente en estrados judiciales ante jueces, tribunales y fiscalía.
+                    </p>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
-                    Apelaciones, casación o hábeas corpus para asegurar justicia y libertad plena.
-                  </p>
                 </div>
+
+                {/* Paso 4: Recursos y Libertad */}
+                <div className="flex flex-col items-start text-left">
+                  <h3 className="font-bold text-xs sm:text-sm text-[#1c2237] mb-1.5 sm:mb-2 font-['Cinzel',serif]">
+                    Recursos y Libertad
+                  </h3>
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/25 flex items-center justify-center text-[#c5a059] flex-shrink-0 shadow-sm">
+                      <Unlock className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal flex-1">
+                      Apelaciones, casación o hábeas corpus para asegurar justicia y libertad plena.
+                    </p>
+                  </div>
+                </div>
+
               </div>
 
             </div>
 
-          </div>
+            {/* Columna Derecha: Fotografía Completa analizando expediente en biblioteca (sin recortar la frente) */}
+            <div className="w-full flex items-center justify-center order-1 lg:order-2">
+              <div className="relative w-full max-w-[560px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-[#c5a059]/40 bg-[#101626] group">
+                <img
+                  src={sofiaWorkingLandscape}
+                  alt="Ab. Sofía Segura Santana analizando expediente"
+                  className="w-full h-auto block object-cover object-top transform group-hover:scale-[1.01] transition-transform duration-500"
+                />
+              </div>
+            </div>
 
-          {/* Columna Derecha: Imagen a ras del margen derecho y a ras del tope superior de sección */}
-          <div className="relative w-full h-[280px] sm:h-[380px] lg:h-full min-h-[280px] sm:min-h-[380px] lg:min-h-[460px] overflow-hidden order-1 lg:order-2">
-            <img
-              src={sofiaWorkingLandscape}
-              alt="Ab. Sofía Segura Santana analizando expediente"
-              className="absolute inset-0 w-full h-full object-cover object-center rounded-none shadow-none transform hover:scale-[1.01] transition-transform duration-500"
-            />
           </div>
-
         </div>
       </section>
 
