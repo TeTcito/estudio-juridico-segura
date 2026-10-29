@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Trophy,
   ShieldCheck,
@@ -19,7 +19,9 @@ import {
   Star,
   ArrowRight,
   X,
-  Check
+  Check,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import type { TabKey } from '../components/Header';
@@ -151,6 +153,33 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
       setRevRating(5);
     }, 1200);
   };
+
+  // Referencia y navegación del carrusel de opiniones
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth * 0.75;
+      carouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+  }, [reviews]);
   return (
     <div className="w-full bg-white text-slate-800 flex flex-col overflow-hidden">
       
@@ -673,7 +702,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
         <div className="w-full flex flex-col lg:flex-row items-stretch relative">
           
           {/* Columna Izquierda: Panel Azul Noche Institucional (#101626) con Borde Ondulado Orgánico */}
-          <div className="w-full lg:w-[320px] xl:w-[360px] 2xl:w-[400px] flex-shrink-0 bg-[#101626] text-white p-6 sm:p-7 lg:p-8 xl:p-9 flex flex-col justify-between relative z-20 text-left">
+          <div className="w-full lg:w-[320px] xl:w-[360px] 2xl:w-[400px] flex-shrink-0 bg-[#101626] text-white p-5 sm:p-6 lg:p-7 pb-4 lg:pb-5 flex flex-col justify-between relative z-20 text-left">
             
             {/* Contenido Superior (Sin etiqueta/badge, texto resumido) */}
             <div>
@@ -690,11 +719,11 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
                     <Star key={i} className="w-3.5 h-3.5 fill-[#c5a059]" />
                   ))}
                 </div>
-                <span className="text-xs font-bold text-[#e5c378]">5.0 / 5.0 Excelencia</span>
+                <span className="text-xs font-bold text-[#e5c378]">5.0 / 5.0</span>
               </div>
 
               {/* Párrafo Resumido */}
-              <p className="text-xs text-slate-300 leading-relaxed font-normal mb-5 max-w-[280px]">
+              <p className="text-xs text-slate-300 leading-relaxed font-normal mb-4 max-w-[280px]">
                 Testimonios reales de clientes en causas penales, de tránsito, familia y laboral.
               </p>
             </div>
@@ -723,42 +752,71 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
 
           </div>
 
-          {/* Columna Derecha: Cuadrícula Compacta de Opiniones */}
-          <div className="flex-1 w-full bg-slate-50/50 p-6 sm:p-7 lg:p-8 xl:p-9 relative flex items-center justify-center overflow-hidden z-10">
+          {/* Columna Derecha: Carrusel Interactivo de Opiniones */}
+          <div className="flex-1 w-full bg-slate-50/50 p-5 sm:p-6 lg:p-7 pb-2 sm:pb-3 lg:pb-3 relative flex flex-col justify-center overflow-hidden z-10">
             
-            <div className="relative w-full z-10">
-              
-              {/* Línea Ondulada Conectora Dorada en Desktop */}
-              <div className="hidden xl:block absolute left-4 right-4 top-6 h-8 pointer-events-none -z-0">
-                <svg viewBox="0 0 1000 60" preserveAspectRatio="none" className="w-full h-full fill-none">
-                  <path
-                    d="M 50,30 Q 150 5, 250 30 Q 350 55, 450 30 Q 550 5, 650 30 Q 750 55, 850 30 Q 950 5, 1000 30"
-                    stroke="#c5a059"
-                    strokeWidth="1.8"
-                    strokeDasharray="4 4"
-                    opacity="0.35"
-                  />
-                  <circle cx="150" cy="8" r="3" fill="#c5a059" opacity="0.45" />
-                  <circle cx="350" cy="52" r="3" fill="#c5a059" opacity="0.45" />
-                  <circle cx="550" cy="8" r="3" fill="#c5a059" opacity="0.45" />
-                  <circle cx="750" cy="52" r="3" fill="#c5a059" opacity="0.45" />
-                  <circle cx="950" cy="8" r="3" fill="#c5a059" opacity="0.45" />
-                </svg>
+            {/* Cabecera del Carrusel: Contador y Botones de Navegación < > */}
+            <div className="flex items-center justify-between mb-2.5 px-1 relative z-20">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-slate-800 font-['Cinzel',serif]">
+                  {reviews.length} Testimonios Verificados
+                </span>
+                <span className="text-[11px] text-slate-400 hidden sm:inline">
+                  · Deslice para ver más
+                </span>
               </div>
 
-              {/* Grilla de Opiniones Mapeadas Dinámicamente */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 xl:gap-3 items-stretch relative z-10 text-center">
-                {reviews.slice(0, 5).map((rev) => (
+              {/* Botones de Flechas Anterior / Siguiente */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => scrollCarousel('left')}
+                  disabled={!canScrollLeft}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center border transition-all ${
+                    canScrollLeft
+                      ? 'border-[#c5a059] bg-white text-[#101626] hover:bg-[#c5a059] hover:text-white shadow-xs cursor-pointer'
+                      : 'border-slate-200 text-slate-300 cursor-not-allowed bg-slate-50'
+                  }`}
+                  aria-label="Opiniones anteriores"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollCarousel('right')}
+                  disabled={!canScrollRight}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center border transition-all ${
+                    canScrollRight
+                      ? 'border-[#c5a059] bg-white text-[#101626] hover:bg-[#c5a059] hover:text-white shadow-xs cursor-pointer'
+                      : 'border-slate-200 text-slate-300 cursor-not-allowed bg-slate-50'
+                  }`}
+                  aria-label="Siguientes opiniones"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Contenedor del Carrusel con Desplazamiento Suave */}
+            <div className="relative w-full z-10">
+              
+              <div
+                ref={carouselRef}
+                onScroll={checkScroll}
+                className="flex items-stretch gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory py-1 px-0.5 no-scrollbar"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {reviews.map((rev) => (
                   <div
                     key={rev.id}
-                    className="flex flex-col items-center justify-between bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 hover:border-[#c5a059]/50 hover:shadow-md transition-all group"
+                    className="flex-shrink-0 w-[235px] sm:w-[250px] xl:w-[240px] 2xl:w-[255px] snap-start flex flex-col justify-between bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 hover:border-[#c5a059]/60 hover:shadow-md transition-all group text-center"
                   >
                     <div>
                       {/* Avatar de Cuenta sin Foto */}
                       <div className="relative mb-2 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full border-2 border-[#c5a059]/35 flex items-center justify-center bg-white shadow-xs p-1">
+                        <div className="w-11 h-11 rounded-full border-2 border-[#c5a059]/35 flex items-center justify-center bg-white shadow-xs p-1">
                           <div className="w-full h-full rounded-full bg-[#101626] text-[#c5a059] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                            <User className="w-5 h-5 stroke-[2]" />
+                            <User className="w-4 h-4 stroke-[2]" />
                           </div>
                         </div>
                       </div>
@@ -770,7 +828,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
                         ))}
                       </div>
 
-                      <h4 className="font-['Cinzel',serif] text-xs sm:text-sm font-bold text-slate-900 leading-tight mb-0.5 truncate max-w-[150px]">
+                      <h4 className="font-['Cinzel',serif] text-xs sm:text-sm font-bold text-slate-900 leading-tight mb-0.5 truncate">
                         {rev.name}
                       </h4>
                       <div className="text-[10px] font-bold text-[#aa8640] uppercase tracking-wider mb-2">
