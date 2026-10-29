@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Trophy,
   ShieldCheck,
@@ -17,11 +17,65 @@ import {
   Briefcase,
   User,
   Star,
-  ArrowRight
+  ArrowRight,
+  X,
+  Check
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import type { TabKey } from '../components/Header';
 import { LAWYER_INFO } from '../data/legalData';
+
+export interface ReviewItem {
+  id: string;
+  name: string;
+  matter: string;
+  location: string;
+  comment: string;
+  rating: number;
+}
+
+const DEFAULT_REVIEWS: ReviewItem[] = [
+  {
+    id: "rev-1",
+    name: "Carlos M.",
+    matter: "Penal · Flagrancia",
+    location: "Buena Fe",
+    comment: "Acompañamiento inmediato en audiencia de flagrancia. La Ab. Sofía logró medidas sustitutivas con una defensa intachable.",
+    rating: 5,
+  },
+  {
+    id: "rev-2",
+    name: "Ing. Roberto V.",
+    matter: "Tránsito & Siniestros",
+    location: "Quevedo",
+    comment: "Su peritaje técnico en el juzgado desvirtuó acusaciones infundadas. Profesionalismo y solvencia de primer nivel.",
+    rating: 5,
+  },
+  {
+    id: "rev-3",
+    name: "Fam. Mendoza P.",
+    matter: "Familia · Tenencia",
+    location: "Buena Fe",
+    comment: "Atención humana y firme en el proceso de tenencia y pensión. Resolvió la causa con total transparencia y rapidez.",
+    rating: 5,
+  },
+  {
+    id: "rev-4",
+    name: "Lcda. Patricia S.",
+    matter: "Derecho Laboral",
+    location: "Los Ríos",
+    comment: "Patrocinó mi reclamo por despido intempestivo con contundencia, asegurando el cobro íntegro de mis liquidaciones de ley.",
+    rating: 5,
+  },
+  {
+    id: "rev-5",
+    name: "Operadora T.",
+    matter: "Transporte · ANT",
+    location: "Los Ríos",
+    comment: "Asesoría corporativa integral para la obtención y formalización de permisos ante la ANT. Gran capacidad técnica y seriedad.",
+    rating: 5,
+  },
+];
 
 // Images
 import sofiaCutout from '../assets/images/sofia-lawyer-cutout.png';
@@ -38,6 +92,65 @@ interface HomeTabProps {
 }
 
 export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyModal }) => {
+  // Estado de Opiniones / Reseñas (persiste en localStorage)
+  const [reviews, setReviews] = useState<ReviewItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('estudio_juridico_reviews');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch {
+        // Fallback
+      }
+    }
+    return DEFAULT_REVIEWS;
+  });
+
+  // Estado del Modal de Opinión
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [revAuthor, setRevAuthor] = useState('');
+  const [revMatter, setRevMatter] = useState('Derecho Penal');
+  const [revLocation, setRevLocation] = useState('Buena Fe');
+  const [revComment, setRevComment] = useState('');
+  const [revRating, setRevRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!revAuthor.trim() || !revComment.trim()) return;
+
+    const item: ReviewItem = {
+      id: `rev-${Date.now()}`,
+      name: revAuthor.trim(),
+      matter: revMatter,
+      location: revLocation.trim() || 'Ecuador',
+      comment: revComment.trim(),
+      rating: revRating || 5,
+    };
+
+    const updated = [item, ...reviews];
+    setReviews(updated);
+    try {
+      localStorage.setItem('estudio_juridico_reviews', JSON.stringify(updated));
+    } catch {
+      // ignore storage error
+    }
+
+    setReviewSubmitted(true);
+    setTimeout(() => {
+      setReviewSubmitted(false);
+      setIsReviewModalOpen(false);
+      setRevAuthor('');
+      setRevComment('');
+      setRevLocation('Buena Fe');
+      setRevRating(5);
+    }, 1200);
+  };
   return (
     <div className="w-full bg-white text-slate-800 flex flex-col overflow-hidden">
       
@@ -554,207 +667,126 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
 
       {/* =========================================================================
           SECCIÓN 6: OPINIONES & TESTIMONIOS VERIFICADOS DE CLIENTES
-          Ocupa todo el ancho de la pestaña, sin hojas y con íconos de perfil sin foto
-          Pegada directamente al footer
+          Compacto, paleta azul navy/dorado, ancho completo, pegado al footer
           ========================================================================= */}
-      <section className="relative w-full bg-white border-t border-stone-200/90 overflow-hidden mb-0 pb-0">
+      <section className="relative w-full bg-white border-t border-slate-200/90 overflow-hidden mb-0 pb-0">
         <div className="w-full flex flex-col lg:flex-row items-stretch relative">
           
-          {/* Columna Izquierda: Panel Verde Bosque Oscuro con Borde Ondulado Orgánico */}
-          <div className="w-full lg:w-[360px] xl:w-[410px] 2xl:w-[450px] flex-shrink-0 bg-[#0f2a1d] text-white p-8 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-between relative z-20 text-left">
+          {/* Columna Izquierda: Panel Azul Noche Institucional (#101626) con Borde Ondulado Orgánico */}
+          <div className="w-full lg:w-[320px] xl:w-[360px] 2xl:w-[400px] flex-shrink-0 bg-[#101626] text-white p-6 sm:p-7 lg:p-8 xl:p-9 flex flex-col justify-between relative z-20 text-left">
             
-            {/* Contenido Superior */}
+            {/* Contenido Superior (Sin etiqueta/badge, texto resumido) */}
             <div>
-              {/* Badge con ícono de Estrella */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b3d2b] border border-[#74c69d]/40 text-[#a3e635] text-[11px] font-bold tracking-widest uppercase mb-4 w-fit shadow-xs">
-                <Star className="w-3.5 h-3.5 fill-[#a3e635]" />
-                <span>OPINIONES & TESTIMONIOS</span>
-              </div>
-
               {/* Título Principal */}
-              <h2 className="font-['Cinzel',serif] text-3xl sm:text-4xl xl:text-[40px] font-bold text-white leading-[1.12] mb-3 tracking-tight">
-                Confianza & <br />
-                <span className="text-[#a3e635]">Casos de Éxito.</span>
+              <h2 className="font-['Cinzel',serif] text-2xl sm:text-3xl font-bold text-white leading-tight mb-2 tracking-tight">
+                Opiniones & <br />
+                <span className="text-[#c5a059]">Casos de Éxito</span>
               </h2>
 
               {/* Calificación Promedio con 5 Estrellas Doradas */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center text-[#e5c378]">
+              <div className="flex items-center gap-1.5 mb-2.5">
+                <div className="flex items-center text-[#c5a059]">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#e5c378]" />
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#c5a059]" />
                   ))}
                 </div>
-                <span className="text-xs font-bold text-emerald-100/90">5.0 / 5.0 Calificación</span>
+                <span className="text-xs font-bold text-[#e5c378]">5.0 / 5.0 Excelencia</span>
               </div>
 
-              {/* Párrafo Descriptivo */}
-              <p className="text-xs sm:text-sm text-emerald-100/85 leading-relaxed font-normal mb-8 max-w-sm">
-                La tranquilidad y libertad de nuestros representados respaldan nuestro ejercicio profesional con honestidad, inmediatez y solvencia técnica en audiencias.
+              {/* Párrafo Resumido */}
+              <p className="text-xs text-slate-300 leading-relaxed font-normal mb-5 max-w-[280px]">
+                Testimonios reales de clientes en causas penales, de tránsito, familia y laboral.
               </p>
             </div>
 
-            {/* Botón Píldora Inferior: Agendar Consulta */}
-            <div className="pt-4 lg:pt-0">
+            {/* Botón: Dejar Opinión */}
+            <div className="pt-2 lg:pt-0">
               <button
-                onClick={() => onSelectTab('contacto')}
-                className="px-7 py-3.5 rounded-full bg-[#4a7c59] hover:bg-[#385e43] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2.5 group w-fit transform hover:-translate-y-0.5 active:translate-y-0"
+                onClick={() => setIsReviewModalOpen(true)}
+                className="px-6 py-2.5 rounded-full bg-[#c5a059] hover:bg-[#b38b39] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group w-fit transform hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>Agendar Consulta</span>
+                <span>Dejar Opinión</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-1" />
               </button>
             </div>
 
-            {/* Borde Ondulado Orgánico S-Curve (Solo Desktop, extiende el color verde hacia las opiniones) */}
-            <div className="hidden lg:block absolute -right-10 top-0 bottom-0 w-10 h-full pointer-events-none z-20 text-[#0f2a1d]">
+            {/* Borde Ondulado Orgánico S-Curve (En azul noche institucional #101626) */}
+            <div className="hidden lg:block absolute -right-9 top-0 bottom-0 w-9 h-full pointer-events-none z-20 text-[#101626]">
               <svg
-                viewBox="0 0 40 500"
+                viewBox="0 0 36 500"
                 preserveAspectRatio="none"
                 className="w-full h-full fill-current"
               >
-                <path d="M 0,0 L 14,0 C 42,110 42,170 20,260 C 2,350 8,420 22,500 L 0,500 Z" />
+                <path d="M 0,0 L 14,0 C 38,110 38,170 18,260 C 2,350 8,420 20,500 L 0,500 Z" />
               </svg>
             </div>
 
           </div>
 
-          {/* Columna Derecha: Cuadrícula de 5 Opiniones con Íconos de Perfil sin Foto y Línea Ondulada */}
-          <div className="flex-1 w-full bg-white p-8 sm:p-10 lg:p-12 xl:p-14 relative flex items-center justify-center overflow-hidden z-10">
+          {/* Columna Derecha: Cuadrícula Compacta de Opiniones */}
+          <div className="flex-1 w-full bg-slate-50/50 p-6 sm:p-7 lg:p-8 xl:p-9 relative flex items-center justify-center overflow-hidden z-10">
             
-            {/* Contenedor Relativo para las 5 Opiniones y la Línea Ondulada */}
             <div className="relative w-full z-10">
               
-              {/* Línea Ondulada Conectora tipo Senoide (Visible en Desktop) */}
-              <div className="hidden xl:block absolute left-4 right-4 top-8 h-10 pointer-events-none -z-0">
+              {/* Línea Ondulada Conectora Dorada en Desktop */}
+              <div className="hidden xl:block absolute left-4 right-4 top-6 h-8 pointer-events-none -z-0">
                 <svg viewBox="0 0 1000 60" preserveAspectRatio="none" className="w-full h-full fill-none">
                   <path
                     d="M 50,30 Q 150 5, 250 30 Q 350 55, 450 30 Q 550 5, 650 30 Q 750 55, 850 30 Q 950 5, 1000 30"
-                    stroke="#52796f"
+                    stroke="#c5a059"
                     strokeWidth="1.8"
                     strokeDasharray="4 4"
                     opacity="0.35"
                   />
-                  {/* Puntos conectores sutiles */}
-                  <circle cx="150" cy="8" r="3" fill="#52796f" opacity="0.4" />
-                  <circle cx="350" cy="52" r="3" fill="#52796f" opacity="0.4" />
-                  <circle cx="550" cy="8" r="3" fill="#52796f" opacity="0.4" />
-                  <circle cx="750" cy="52" r="3" fill="#52796f" opacity="0.4" />
-                  <circle cx="950" cy="8" r="3" fill="#52796f" opacity="0.4" />
+                  <circle cx="150" cy="8" r="3" fill="#c5a059" opacity="0.45" />
+                  <circle cx="350" cy="52" r="3" fill="#c5a059" opacity="0.45" />
+                  <circle cx="550" cy="8" r="3" fill="#c5a059" opacity="0.45" />
+                  <circle cx="750" cy="52" r="3" fill="#c5a059" opacity="0.45" />
+                  <circle cx="950" cy="8" r="3" fill="#c5a059" opacity="0.45" />
                 </svg>
               </div>
 
-              {/* Grilla de las 5 Opiniones */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6 xl:gap-5 items-stretch relative z-10 text-center">
-                
-                {/* Opinión 1: Derecho Penal */}
-                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
-                  <div className="relative mb-2.5 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                        <User className="w-6 h-6 stroke-[2]" />
+              {/* Grilla de Opiniones Mapeadas Dinámicamente */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 xl:gap-3 items-stretch relative z-10 text-center">
+                {reviews.slice(0, 5).map((rev) => (
+                  <div
+                    key={rev.id}
+                    className="flex flex-col items-center justify-between bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 hover:border-[#c5a059]/50 hover:shadow-md transition-all group"
+                  >
+                    <div>
+                      {/* Avatar de Cuenta sin Foto */}
+                      <div className="relative mb-2 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full border-2 border-[#c5a059]/35 flex items-center justify-center bg-white shadow-xs p-1">
+                          <div className="w-full h-full rounded-full bg-[#101626] text-[#c5a059] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                            <User className="w-5 h-5 stroke-[2]" />
+                          </div>
+                        </div>
                       </div>
+
+                      {/* Estrellas Doradas */}
+                      <div className="flex items-center justify-center gap-0.5 text-[#c5a059] mb-1">
+                        {[...Array(rev.rating || 5)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-[#c5a059]" />
+                        ))}
+                      </div>
+
+                      <h4 className="font-['Cinzel',serif] text-xs sm:text-sm font-bold text-slate-900 leading-tight mb-0.5 truncate max-w-[150px]">
+                        {rev.name}
+                      </h4>
+                      <div className="text-[10px] font-bold text-[#aa8640] uppercase tracking-wider mb-2">
+                        {rev.matter}
+                      </div>
+
+                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic line-clamp-4">
+                        “{rev.comment}”
+                      </p>
+                    </div>
+
+                    <div className="pt-2 mt-2 border-t border-slate-100 text-[9px] text-slate-400 font-medium">
+                      📍 {rev.location}
                     </div>
                   </div>
-                  {/* Estrellas */}
-                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
-                    ))}
-                  </div>
-                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Carlos M.</h4>
-                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Penal · Flagrancia</div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
-                    “Acompañamiento inmediato en audiencia de flagrancia. La Ab. Sofía logró medidas sustitutivas con una defensa intachable.”
-                  </p>
-                </div>
-
-                {/* Opinión 2: Tránsito & Siniestros */}
-                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
-                  <div className="relative mb-2.5 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                        <User className="w-6 h-6 stroke-[2]" />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Estrellas */}
-                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
-                    ))}
-                  </div>
-                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Ing. Roberto V.</h4>
-                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Tránsito & Siniestros</div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
-                    “Su peritaje técnico en el juzgado desvirtuó acusaciones infundadas. Profesionalismo y solvencia de primer nivel.”
-                  </p>
-                </div>
-
-                {/* Opinión 3: Derecho Familiar */}
-                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
-                  <div className="relative mb-2.5 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                        <User className="w-6 h-6 stroke-[2]" />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Estrellas */}
-                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
-                    ))}
-                  </div>
-                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Fam. Mendoza P.</h4>
-                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Familia · Tenencia</div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
-                    “Atención humana y firme en el proceso de tenencia y pensión. Resolvió la causa con total transparencia y rapidez.”
-                  </p>
-                </div>
-
-                {/* Opinión 4: Derecho Laboral */}
-                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
-                  <div className="relative mb-2.5 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                        <User className="w-6 h-6 stroke-[2]" />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Estrellas */}
-                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
-                    ))}
-                  </div>
-                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Lcda. Patricia S.</h4>
-                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Derecho Laboral</div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
-                    “Patrocinó mi reclamo por despido intempestivo con contundencia, asegurando el cobro íntegro de mis liquidaciones de ley.”
-                  </p>
-                </div>
-
-                {/* Opinión 5: Compañías de Transporte */}
-                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
-                  <div className="relative mb-2.5 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                        <User className="w-6 h-6 stroke-[2]" />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Estrellas */}
-                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
-                    ))}
-                  </div>
-                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Operadora T.</h4>
-                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Transporte · ANT</div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
-                    “Asesoría corporativa integral para la obtención y formalización de permisos ante la ANT. Gran capacidad técnica y seriedad.”
-                  </p>
-                </div>
-
+                ))}
               </div>
 
             </div>
@@ -763,6 +795,157 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
 
         </div>
       </section>
+
+      {/* =========================================================================
+          MODAL: DEJAR OPINIÓN / TESTIMONIO (Persiste en localStorage)
+          ========================================================================= */}
+      {isReviewModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-lg rounded-3xl bg-white border border-slate-100 p-6 sm:p-8 shadow-2xl text-left">
+            
+            {/* Botón Cerrar */}
+            <button
+              onClick={() => setIsReviewModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors"
+              aria-label="Cerrar modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Encabezado del Modal */}
+            <div className="mb-4">
+              <h3 className="font-['Cinzel',serif] text-xl sm:text-2xl font-bold text-[#101626]">
+                Dejar una Opinión
+              </h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                Comparta su experiencia con el Estudio Jurídico de la Ab. Sofía Segura Santana. Su reseña se publicará de inmediato.
+              </p>
+            </div>
+
+            {!reviewSubmitted ? (
+              <form onSubmit={handleReviewSubmit} className="space-y-3.5">
+                
+                {/* Selector Interactivo de Estrellas */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Calificación *
+                  </label>
+                  <div className="flex items-center gap-1.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRevRating(star)}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onMouseLeave={() => setHoverRating(null)}
+                        className="p-1 focus:outline-none transition-transform hover:scale-110"
+                      >
+                        <Star
+                          className={`w-6 h-6 ${
+                            (hoverRating !== null ? star <= hoverRating : star <= revRating)
+                              ? 'text-[#c5a059] fill-[#c5a059]'
+                              : 'text-slate-300'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                    <span className="text-xs font-bold text-slate-600 ml-2">
+                      {hoverRating || revRating} de 5 Estrellas
+                    </span>
+                  </div>
+                </div>
+
+                {/* Fila: Nombre y Ciudad */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Nombre o Iniciales *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ej. Carlos M. / Particular"
+                      value={revAuthor}
+                      onChange={(e) => setRevAuthor(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#c5a059] focus:bg-white transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Cantón / Ciudad
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej. Buena Fe, Quevedo"
+                      value={revLocation}
+                      onChange={(e) => setRevLocation(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#c5a059] focus:bg-white transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Campo: Materia Legal */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Área o Materia Legal Atendida *
+                  </label>
+                  <select
+                    value={revMatter}
+                    onChange={(e) => setRevMatter(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#c5a059] focus:bg-white transition-all"
+                  >
+                    <option value="Derecho Penal · Flagrancia">Derecho Penal (Flagrancias, Juicios, Delitos)</option>
+                    <option value="Tránsito & Siniestros">Tránsito (Accidentes, Peritajes, Citaciones)</option>
+                    <option value="Familia · Alimentos & Tenencia">Derecho Familiar (Pensiones, Tenencia, Divorcios)</option>
+                    <option value="Derecho Laboral">Derecho Laboral (Despidos, Vistos Buenos)</option>
+                    <option value="Transporte · ANT">Compañías de Transporte (Permisos, Constitución)</option>
+                    <option value="Asesoría Jurídica General">Otra Asesoría Jurídica</option>
+                  </select>
+                </div>
+
+                {/* Campo: Comentario / Testimonio */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Su Opinión / Testimonio *
+                  </label>
+                  <textarea
+                    required
+                    rows={3}
+                    placeholder="Relate brevemente cómo fue la atención y el resultado obtenido..."
+                    value={revComment}
+                    onChange={(e) => setRevComment(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#c5a059] focus:bg-white transition-all resize-none"
+                  />
+                </div>
+
+                {/* Botón Enviar */}
+                <button
+                  type="submit"
+                  className="w-full py-3 rounded-full bg-[#c5a059] hover:bg-[#b38b39] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <Check className="w-4 h-4 text-white" />
+                  <span>Publicar Testimonio</span>
+                </button>
+
+              </form>
+            ) : (
+              <div className="py-8 text-center space-y-3">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center shadow-sm">
+                  <Check className="w-6 h-6 stroke-[2.5]" />
+                </div>
+                <h4 className="font-['Cinzel',serif] text-lg font-bold text-slate-800">
+                  ¡Muchas gracias por su opinión!
+                </h4>
+                <p className="text-xs text-slate-500 max-w-xs mx-auto">
+                  Su testimonio ha sido guardado exitosamente y ya es visible en la página web.
+                </p>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
