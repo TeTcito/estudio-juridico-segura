@@ -80,10 +80,10 @@ const DEFAULT_REVIEWS: ReviewItem[] = [
 ];
 
 // Images
-import sofiaCutout from '../assets/images/sofia-lawyer-cutout.png';
+import sofiaCutout from '../assets/images/sofia-standing-cutout.png';
 import portraitFormal from '../assets/images/sofia-portrait-formal.jpg';
-import sofiaDeskLandscape from '../assets/images/sofia-desk-landscape.jpg';
-import sofiaWorkingLandscape from '../assets/images/sofia-working-landscape.jpg';
+import sofiaDeskLandscape from '../assets/images/sofia-office-executive.jpg';
+import sofiaWorkingLandscape from '../assets/images/sofia-legal-library.jpg';
 import mosaicMainCenter from '../assets/images/mosaic-main-center.jpg';
 import mosaicCourtroom from '../assets/images/mosaic-courtroom.jpg';
 import mosaicCollaboration from '../assets/images/mosaic-collaboration.jpg';
@@ -284,13 +284,13 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
             <div className="lg:col-span-5 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200">
               
               {/* La Máscara de Color (Contenedor redondeado arriba, a ras abajo) */}
-              <div className="absolute w-[82%] sm:w-[86%] h-[80%] bottom-0 rounded-t-[36px] sm:rounded-t-[44px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
+              <div className="absolute w-[75%] sm:w-[80%] md:w-[75%] lg:w-[82%] max-w-[360px] h-[78%] sm:h-[82%] bottom-0 rounded-t-[38px] sm:rounded-t-[48px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
 
               {/* Imagen con Fondo Transparente terminando EXACTAMENTE en el borde inferior */}
               <img
                 src={sofiaCutout}
                 alt="Ab. Sofía Segura Santana - Abogada Penalista y Tránsito"
-                className="relative z-10 w-auto max-h-[350px] sm:max-h-[460px] md:max-h-[520px] lg:max-h-[560px] xl:max-h-[620px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)] block align-bottom m-0 p-0"
+                className="relative z-10 w-auto max-h-[380px] sm:max-h-[480px] md:max-h-[540px] lg:max-h-[590px] xl:max-h-[640px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)] block align-bottom m-0 p-0"
               />
 
             </div>
