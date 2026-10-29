@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Requerimientos de Información - Estudio Jurídico Segura Santana & Asociados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      font-size: 8.5pt;
+      line-height: 1.35;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+      break-after: page;
+      height: 100%;
+      min-height: 260mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* Header styling */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #c5a059;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      height: 46px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-titles h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 11pt;
+      font-weight: 800;
+      color: #1c2237;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .brand-titles .subtitle {
+      font-size: 7pt;
+      color: #aa8640;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .header-badge {
+      text-align: right;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid #c5a059;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .header-badge .doc-type {
+      font-family: 'Cinzel', serif;
+      font-size: 7.5pt;
+      font-weight: 800;
+      color: #1c2237;
+      text-transform: uppercase;
+    }
+
+    .header-badge .doc-meta {
+      font-size: 6.5pt;
+      color: #64748b;
+    }
+
+    /* Progress Banner */
+    .progress-banner {
+      background: linear-gradient(135deg, #1c2237 0%, #2a3454 100%);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-left: 4px solid #c5a059;
+    }
+
+    .banner-text {
+      max-width: 78%;
+    }
+
+    .banner-text h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 9pt;
+      font-weight: 700;
+      color: #e5c378;
+      margin-bottom: 2px;
+    }
+
+    .banner-text p {
+      font-size: 7.2pt;
+      color: #cbd5e1;
+      line-height: 1.25;
+    }
+
+    .banner-pill {
+      background: rgba(197, 160, 89, 0.2);
+      border: 1px solid #c5a059;
+      color: #fce7b0;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 6.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* Sections */
+    .section-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 9px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 5px;
+      margin-bottom: 7px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .num-tag {
+      background: #1c2237;
+      color: #c5a059;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 7.5pt;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 8.8pt;
+      font-weight: 800;
+      color: #1c2237;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tab-badge {
+      font-size: 6.5pt;
+      color: #0f766e;
+      background: #f0fdfa;
+      border: 1px solid #ccfbf1;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .section-goal {
+      font-size: 7.2pt;
+      color: #64748b;
+      margin-bottom: 7px;
+      font-style: italic;
+    }
+
+    /* Grid layout inside sections */
+    .cols-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .cols-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .item-box {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 4px;
+      padding: 6px 8px;
+    }
+
+    .item-box.highlight {
+      background: #fafaf9;
+      border-color: #e7e5e4;
+      border-left: 3px solid #aa8640;
+    }
+
+    .item-label {
+      font-size: 7.2pt;
+      font-weight: 700;
+      color: #1c2237;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .item-desc {
+      font-size: 6.8pt;
+      color: #475569;
+      line-height: 1.25;
+    }
+
+    .checkbox-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5px;
+    }
+
+    .checkbox-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 7pt;
+      color: #334155;
+      line-height: 1.25;
+    }
+
+    .chk {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1.2px solid #94a3b8;
+      border-radius: 2px;
+      margin-top: 1.5px;
+      flex-shrink: 0;
+      background: #ffffff;
+    }
+
+    .dotted-line {
+      border-bottom: 1px dashed #cbd5e1;
+      height: 13px;
+      margin-top: 3px;
+    }
+
+    /* Tables */
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 6.8pt;
+      margin-top: 4px;
+    }
+
+    .mini-table th {
+      background: #f1f5f9;
+      color: #1c2237;
+      font-weight: 700;
+      text-align: left;
+      padding: 3px 6px;
+      border: 1px solid #e2e8f0;
+      font-size: 6.5pt;
+      text-transform: uppercase;
+    }
+
+    .mini-table td {
+      padding: 3.5px 6px;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      vertical-align: top;
+    }
+
+    .tag-active {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    /* Bottom Instructions Card */
+    .delivery-box {
+      background: #fcfbf9;
+      border: 1px solid #e7e0d3;
+      border-left: 4px solid #c5a059;
+      border-radius: 6px;
+      padding: 7px 10px;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .delivery-content h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 8pt;
+      color: #1c2237;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .delivery-content p {
+      font-size: 6.8pt;
+      color: #57534e;
+    }
+
+    .channel-badges {
+      display: flex;
+      gap: 6px;
+    }
+
+    .badge-channel {
+      background: #ffffff;
+      border: 1px solid #d6d3d1;
+      padding: 3px 7px;
+      border-radius: 4px;
+      font-size: 6.5pt;
+      font-weight: 600;
+      color: #1c2237;
+      white-space: nowrap;
+    }
+
+    /* Footer */
+    .footer-bar {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 6.5pt;
+      color: #94a3b8;
+    }
+
+    .footer-bar strong {
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1 ==================== -->
+  <div class="page">
+    <div>
+      <!-- Header -->
+      <div class="header-bar">
+        <div class="header-left">
+          <img src="data:image/png;base64,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" class="logo-img" alt="Logo">
+          <div class="brand-titles">
+            <h1>Estudio Jurídico Segura Santana &amp; Asociados</h1>
+            <div class="subtitle">Especialistas en Derecho Procesal Penal &bull; Litigación de Alta Fidelidad</div>
+          </div>
+        </div>
+        <div class="header-badge">
+          <div class="doc-type">Requerimiento de Información</div>
+          <div class="doc-meta">Sitio Web Oficial &bull; Versión 1.0 &bull; Octubre 2026</div>
+        </div>
+      </div>
+
+      <!-- Progress Banner -->
+      <div class="progress-banner">
+        <div class="banner-text">
+          <h2>Reporte de Avance: Pestaña Principal ("Inicio") Completada</h2>
+          <p>
+            Estimada <strong>Ab. Sofía Segura Santana</strong>: La página principal ya se encuentra estructurada con diseño corporativo de alta gama, línea de tiempo, cálculo de garantías, botón de flagrancia 24/7 y testimonios. Para finalizar las <strong>4 pestañas restantes</strong> con su toque personal, hemos resumido los datos puntuales que requerimos de su parte.
+          </p>
+        </div>
+        <div class="banner-pill">
+          Fase 2 de 2: Personalización
+        </div>
+      </div>
+
+      <!-- SECCIÓN 1: PESTAÑA PERFIL PROFESIONAL -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="num-tag">01</span>
+            <span class="section-title">Pestaña: Perfil Profesional ("Sobre Mí / Trayectoria")</span>
+          </div>
+          <span class="tab-badge">Pestaña 2 del Sitio</span>
+        </div>
+        <div class="section-goal">
+          <strong>Objetivo:</strong> Posicionar su autoridad académica penal, rigor ético y experiencia ante jueces, clientes y colegas.
+        </div>
+
+        <div class="cols-2">
+          <!-- Datos Académicos y Credenciales -->
+          <div class="item-box">
+            <div class="item-label">
+              <span>A. Formación Académica &amp; Títulos</span>
+            </div>
+            <div class="item-desc">
+              Confirme o complete los datos que aparecerán en la vitrina de credenciales:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Pregrado:</strong> Abogada de los Tribunales (Universidad: <span class="dotted-line" style="display:inline-block; width:120px; height:8px;"></span>)</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Posgrado:</strong> Magíster en Derecho Procesal Penal (Universidad / Año: <span class="dotted-line" style="display:inline-block; width:110px; height:8px;"></span>)</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Matrícula Profesional:</strong> Matrícula Foro / CJ (Opcional, recomendado para generar confianza legal inmediata).</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Actualización Continua:</strong> Menciones o diplomados en Litigación Oral, Casación o Peritajes Forenses que desee destacar.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Reseña y Fotos -->
+          <div class="item-box highlight">
+            <div class="item-label">
+              <span>B. Biografía Resumida &amp; Fotografías</span>
+            </div>
+            <div class="item-desc">
+              En la maqueta hemos redactado una síntesis de su ejercicio penal:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Años de Ejercicio:</strong> Confirmar si mantenemos <em>"12+ años de experiencia penal"</em> o especificar el año de inicio.</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Frase Lema Institucional:</strong> Validar propuesta: <em>"La libertad de una persona jamás puede someterse a la improvisación"</em> (o sugerir lema propio).</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Fotografías Oficiales:</strong> Confirmar si aprueba las fotos actuales del prototipo o si nos enviará 1 a 2 fotografías adicionales en toga/despacho en alta resolución.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: PESTAÑA ÁREAS DE PRÁCTICA -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="num-tag">02</span>
+            <span class="section-title">Pestaña: Especialidades Jurídicas ("Áreas de Práctica")</span>
+          </div>
+          <span class="tab-badge">Pestaña 3 del Sitio</span>
+        </div>
+        <div class="section-goal">
+          <strong>Objetivo:</strong> Que el justiciable o su familia identifique de inmediato su tipo de problema penal y solicite patrocinio.
+        </div>
+
+        <div class="item-desc" style="margin-bottom: 5px;">
+          Actualmente el sitio web cuenta con un selector interactivo estructurado con <strong>5 especialidades estratégicas</strong>. Por favor marque si las aprueba o desea hacer cambios:
+        </div>
+
+        <table class="mini-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">Especialidad Propuesta</th>
+              <th style="width: 52%;">Alcance &amp; Actuaciones Frecuentes en el Sitio</th>
+              <th style="width: 20%; text-align: center;">Acción Requerida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Flagrancias y Detenciones 24/7</strong></td>
+              <td>Primeras 24 horas críticas: legalidad de aprehensión, medidas sustitutivas a prisión preventiva y Fiscalía.</td>
+              <td style="text-align: center;"><span class="chk"></span> Aprobar &nbsp; <span class="chk"></span> Ajustar</td>
+            </tr>
+            <tr>
+              <td><strong>2. Delitos Contra la Vida e Integridad</strong></td>
+              <td>Homicidios, femicidios, lesiones, robo agravado, sustancias sujetas a fiscalización y asociación ilícita.</td>
+              <td style="text-align: center;"><span class="chk"></span> Aprobar &nbsp; <span class="chk"></span> Ajustar</td>
+            </tr>
+            <tr>
+              <td><strong>3. Penal Económico &amp; Compliance</strong></td>
+              <td>Lavado de activos, fraude procesal, cohecho, delitos tributarios/aduaneros y personas jurídicas.</td>
+              <td style="text-align: center;"><span class="chk"></span> Aprobar &nbsp; <span class="chk"></span> Ajustar</td>
+            </tr>
+            <tr>
+              <td><strong>4. Recursos de Apelación y Casación</strong></td>
+              <td>Impugnación ante Cortes Provinciales y Corte Nacional de Justicia por nulidades y errores in iudicando.</td>
+              <td style="text-align: center;"><span class="chk"></span> Aprobar &nbsp; <span class="chk"></span> Ajustar</td>
+            </tr>
+            <tr>
+              <td><strong>5. Garantías y Hábeas Corpus</strong></td>
+              <td>Tutela constitucional urgente ante detenciones arbitrarias, ilegales o vulneración de salud carcelaria.</td>
+              <td style="text-align: center;"><span class="chk"></span> Aprobar &nbsp; <span class="chk"></span> Ajustar</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 6px; font-size: 6.8pt; color: #475569; background: #f8fafc; padding: 4px 8px; border-radius: 4px;">
+          <strong>Nota de personalización:</strong> ¿Desea añadir o priorizar alguna otra materia? (Ej. Delitos de Tránsito con muerte, Violencia Intrafamiliar, Extradiciones o Delitos Informáticos): <span class="dotted-line" style="display:inline-block; width:45%; height:8px;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Página 1 -->
+    <div class="footer-bar">
+      <div><strong>Estudio Jurídico Segura Santana &amp; Asociados</strong> &bull; Documento Confidencial de Trabajo</div>
+      <div>Página 1 de 2</div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 2 ==================== -->
+  <div class="page">
+    <div>
+      <!-- Header Página 2 -->
+      <div class="header-bar">
+        <div class="header-left">
+          <img src="data:image/png;base64,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" class="logo-img" alt="Logo">
+          <div class="brand-titles">
+            <h1>Estudio Jurídico Segura Santana &amp; Asociados</h1>
+            <div class="subtitle">Guía de Requerimientos de Información &bull; Pestañas 4 y 5</div>
+          </div>
+        </div>
+        <div class="header-badge">
+          <div class="doc-type">Continuación de Guía</div>
+          <div class="doc-meta">Metodología &bull; FAQ &bull; Canales de Contacto</div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: PESTAÑA METODOLOGÍA Y PREGUNTAS FRECUENTES -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="num-tag">03</span>
+            <span class="section-title">Pestaña: Metodología y Preguntas Frecuentes ("Cómo Trabajamos")</span>
+          </div>
+          <span class="tab-badge">Pestaña 4 del Sitio</span>
+        </div>
+        <div class="section-goal">
+          <strong>Objetivo:</strong> Generar transparencia, educar al usuario sobre los pasos procesales y resolver dudas antes de contactar.
+        </div>
+
+        <div class="cols-2">
+          <!-- Esquema de Proceso -->
+          <div class="item-box">
+            <div class="item-label">
+              <span>A. Metodología de 4 Fases (Propuesta)</span>
+            </div>
+            <div class="item-desc">
+              El sitio web presenta este flujo visual de trabajo:
+            </div>
+            <ol style="margin-left: 14px; margin-top: 4px; font-size: 6.8pt; color: #334155; line-height: 1.35;">
+              <li><strong>01. Evaluación Inmediata:</strong> Análisis preliminar y estado procesal.</li>
+              <li><strong>02. Auditoría del Expediente:</strong> Revisión de indicios, peritajes y nulidades.</li>
+              <li><strong>03. Estrategia &amp; Teoría del Caso:</strong> Pruebas de descargo e interrogatorios.</li>
+              <li><strong>04. Litigio Oral Contundente:</strong> Defensa técnica en audiencia de juicio.</li>
+            </ol>
+            <div style="margin-top: 5px; font-size: 6.8pt; color: #64748b;">
+              <span class="chk"></span> <em>Aprobado conforme a la práctica forense del estudio.</em>
+            </div>
+          </div>
+
+          <!-- Política de Honorarios y FAQs -->
+          <div class="item-box highlight">
+            <div class="item-label">
+              <span>B. Política de Honorarios &amp; Consultas</span>
+            </div>
+            <div class="item-desc">
+              Defina cómo prefiere comunicar el cobro de servicios:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Honorarios por Etapas:</strong> Contrato escrito fijado por etapa procesal (flagrancia, instrucción, juicio, recursos) sin cobros ocultos.</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Consulta Inicial:</strong> Indique si la primera cita o evaluación de expediente tiene costo fijo, o si es deducible al asumir el patrocinio: <span class="dotted-line" style="display:inline-block; width:130px; height:8px;"></span></span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Preguntas Frecuentes (FAQ):</strong> Ya se redactaron 5 respuestas sobre detenciones 24h, prisión preventiva, cambio de defensor, honorarios y hábeas corpus. ¿Desea agregar otra pregunta común?: <span class="dotted-line" style="display:inline-block; width:100px; height:8px;"></span></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 4: PESTAÑA CONTACTO Y CANALES DE GUARDIA -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="num-tag">04</span>
+            <span class="section-title">Pestaña: Canales de Contacto y Despacho ("Contacto 24/7")</span>
+          </div>
+          <span class="tab-badge">Pestaña 5 del Sitio</span>
+        </div>
+        <div class="section-goal">
+          <strong>Objetivo:</strong> Conectar inmediatamente al cliente en crisis con sus líneas telefónicas y WhatsApp, además de capturar casos por formulario web.
+        </div>
+
+        <div class="cols-3">
+          <!-- Teléfonos y WhatsApp -->
+          <div class="item-box">
+            <div class="item-label">
+              <span>A. Líneas Telefónicas</span>
+            </div>
+            <div class="item-desc">
+              Actualmente configuradas:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Línea 1 (Principal):</strong><br><code>099 8203 766</code> (WhatsApp 24/7 y llamadas)</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Línea 2 (Secundaria):</strong><br><code>098 160 3299</code> (¿Es de oficina, colega o asistente?)</span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span>¿Desea cambiar o mantener ambos números activos en los botones directos?</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Ubicación y Despacho -->
+          <div class="item-box">
+            <div class="item-label">
+              <span>B. Sede / Oficina Física</span>
+            </div>
+            <div class="item-desc">
+              Definir formato de visualización:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Dirección Exacta:</strong> Si desea publicar la oficina física (Edificio, piso, oficina, cantón/ciudad): <span class="dotted-line" style="display:inline-block; width:100%; height:8px;"></span></span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Atención Previa Cita:</strong> O mantener como está: <em>"Atención presencial en despacho previa cita &bull; Cobertura en unidades judiciales a nivel nacional"</em>.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Correo y Formulario -->
+          <div class="item-box">
+            <div class="item-label">
+              <span>C. Correo &amp; Horarios</span>
+            </div>
+            <div class="item-desc">
+              Canales institucionales:
+            </div>
+            <ul class="checkbox-list" style="margin-top: 4px;">
+              <li>
+                <span class="chk"></span>
+                <span><strong>Correo Electrónico:</strong> Confirmar correo donde deben llegar las consultas del formulario: <span class="dotted-line" style="display:inline-block; width:100%; height:8px;"></span></span>
+              </li>
+              <li>
+                <span class="chk"></span>
+                <span><strong>Horarios de Despacho:</strong> Ej. Lunes a Viernes de 09h00 a 18h00 previa cita (Flagrancias activas 24/7).</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUADRO DE ENTREGA FÁCIL: ¿CÓMO ENVIAR ESTA INFORMACIÓN? -->
+      <div class="delivery-box">
+        <div class="delivery-content">
+          <h4>¿Cómo puede hacernos llegar esta información? (Modalidad Rápida)</h4>
+          <p>
+            Sabemos que su agenda en audiencias y tribunales es sumamente activa. Por ello, <strong>no necesita redactar un documento extenso</strong>:
+            puede simplemente enviarnos un <strong>mensaje de WhatsApp, una nota de voz</strong> respondiendo punto por punto, o llenar directamente las líneas de este documento.
+          </p>
+        </div>
+        <div class="channel-badges">
+          <div class="badge-channel">&bull; Audio de WhatsApp</div>
+          <div class="badge-channel">&bull; Mensaje de Texto</div>
+          <div class="badge-channel">&bull; Correo Electrónico</div>
+        </div>
+      </div>
+
+      <!-- Resumen de Pasos Inmediatos -->
+      <div style="margin-top: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 7px 10px;">
+        <div style="font-size: 7.2pt; font-weight: 700; color: #1c2237; text-transform: uppercase; font-family: 'Cinzel', serif; margin-bottom: 3px;">
+          Próximo Hito: Entrega Integral del Sitio Web y Despliegue en Línea
+        </div>
+        <p style="font-size: 6.8pt; color: #475569; line-height: 1.3;">
+          Una vez recibidas sus validaciones o datos puntuales, integraremos los contenidos definitivos en las 4 pestañas, configuraremos el dominio institucional y realizaremos las pruebas técnicas de envío de formularios y botones directos de WhatsApp para el lanzamiento definitivo.
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer Página 2 -->
+    <div class="footer-bar">
+      <div><strong>Estudio Jurídico Segura Santana &amp; Asociados</strong> &bull; Soporte y Desarrollo Web Especializado</div>
+      <div>Página 2 de 2</div>
+    </div>
+  </div>
+
+</body>
+</html>
