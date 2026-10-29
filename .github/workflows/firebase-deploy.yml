@@ -30,4 +30,4 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           export FIREBASE_TOKEN="$FIREBASE_TOKEN"
-          npx --yes firebase-tools deploy --only hosting --non-interactive
+          npx --yes firebase-tools deploy --only hosting --project abogadasofiasegura --non-interactive
