@@ -15,11 +15,8 @@ import {
   Gavel,
   Unlock,
   Briefcase,
-  Leaf,
-  PenTool,
-  Sprout,
-  CheckCircle2,
-  TrendingUp,
+  User,
+  Star,
   ArrowRight
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
@@ -556,47 +553,58 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
       </section>
 
       {/* =========================================================================
-          SECCIÓN 6: NUESTRO PROCESO / WORKFLOW ESTRATÉGICO
-          Diseño idéntico a la referencia, pegado directamente al footer
+          SECCIÓN 6: OPINIONES & TESTIMONIOS VERIFICADOS DE CLIENTES
+          Ocupa todo el ancho de la pestaña, sin hojas y con íconos de perfil sin foto
+          Pegada directamente al footer
           ========================================================================= */}
       <section className="relative w-full bg-white border-t border-stone-200/90 overflow-hidden mb-0 pb-0">
-        <div className="w-full max-w-[1720px] mx-auto flex flex-col lg:flex-row items-stretch relative">
+        <div className="w-full flex flex-col lg:flex-row items-stretch relative">
           
           {/* Columna Izquierda: Panel Verde Bosque Oscuro con Borde Ondulado Orgánico */}
-          <div className="w-full lg:w-[380px] xl:w-[430px] 2xl:w-[470px] flex-shrink-0 bg-[#0f2a1d] text-white p-8 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-between relative z-20 text-left">
+          <div className="w-full lg:w-[360px] xl:w-[410px] 2xl:w-[450px] flex-shrink-0 bg-[#0f2a1d] text-white p-8 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-between relative z-20 text-left">
             
             {/* Contenido Superior */}
             <div>
-              {/* Badge con ícono de Hoja */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b3d2b] border border-[#74c69d]/40 text-[#a3e635] text-[11px] font-bold tracking-widest uppercase mb-5 w-fit shadow-xs">
-                <Leaf className="w-3.5 h-3.5 fill-[#a3e635]" />
-                <span>NUESTRO PROCESO</span>
+              {/* Badge con ícono de Estrella */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b3d2b] border border-[#74c69d]/40 text-[#a3e635] text-[11px] font-bold tracking-widest uppercase mb-4 w-fit shadow-xs">
+                <Star className="w-3.5 h-3.5 fill-[#a3e635]" />
+                <span>OPINIONES & TESTIMONIOS</span>
               </div>
 
               {/* Título Principal */}
-              <h2 className="font-['Cinzel',serif] text-3xl sm:text-4xl xl:text-[42px] font-bold text-white leading-[1.12] mb-4 tracking-tight">
-                Defensa Estratégica. <br />
-                <span className="text-[#a3e635]">Resultados Reales.</span>
+              <h2 className="font-['Cinzel',serif] text-3xl sm:text-4xl xl:text-[40px] font-bold text-white leading-[1.12] mb-3 tracking-tight">
+                Confianza & <br />
+                <span className="text-[#a3e635]">Casos de Éxito.</span>
               </h2>
+
+              {/* Calificación Promedio con 5 Estrellas Doradas */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center text-[#e5c378]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#e5c378]" />
+                  ))}
+                </div>
+                <span className="text-xs font-bold text-emerald-100/90">5.0 / 5.0 Calificación</span>
+              </div>
 
               {/* Párrafo Descriptivo */}
               <p className="text-xs sm:text-sm text-emerald-100/85 leading-relaxed font-normal mb-8 max-w-sm">
-                Le acompañamos en cada etapa procesal para asegurar que su defensa sea técnica, rigurosa, inmediata y plenamente constitucional.
+                La tranquilidad y libertad de nuestros representados respaldan nuestro ejercicio profesional con honestidad, inmediatez y solvencia técnica en audiencias.
               </p>
             </div>
 
-            {/* Botón Píldora Inferior: Trabajar con Nosotros */}
+            {/* Botón Píldora Inferior: Agendar Consulta */}
             <div className="pt-4 lg:pt-0">
               <button
                 onClick={() => onSelectTab('contacto')}
                 className="px-7 py-3.5 rounded-full bg-[#4a7c59] hover:bg-[#385e43] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2.5 group w-fit transform hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>Trabajar con Nosotros</span>
+                <span>Agendar Consulta</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-1" />
               </button>
             </div>
 
-            {/* Borde Ondulado Orgánico S-Curve (Solo Desktop, extiende el color verde hacia los pasos) */}
+            {/* Borde Ondulado Orgánico S-Curve (Solo Desktop, extiende el color verde hacia las opiniones) */}
             <div className="hidden lg:block absolute -right-10 top-0 bottom-0 w-10 h-full pointer-events-none z-20 text-[#0f2a1d]">
               <svg
                 viewBox="0 0 40 500"
@@ -609,145 +617,141 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
 
           </div>
 
-          {/* Columna Derecha: Proceso de 5 Pasos con Línea Ondulada y Follaje */}
-          <div className="flex-1 bg-white p-8 sm:p-10 lg:p-12 xl:p-14 relative flex items-center justify-center overflow-hidden z-10">
+          {/* Columna Derecha: Cuadrícula de 5 Opiniones con Íconos de Perfil sin Foto y Línea Ondulada */}
+          <div className="flex-1 w-full bg-white p-8 sm:p-10 lg:p-12 xl:p-14 relative flex items-center justify-center overflow-hidden z-10">
             
-            {/* Follaje botánico verde en la esquina superior derecha (exacto a la referencia) */}
-            <div className="absolute top-0 right-0 w-36 sm:w-48 lg:w-56 xl:w-64 h-auto pointer-events-none z-10 drop-shadow-md overflow-hidden">
-              <svg viewBox="0 0 240 220" fill="none" className="w-full h-full">
-                <defs>
-                  <linearGradient id="leafG1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#1b4332" />
-                    <stop offset="60%" stopColor="#2d6a4f" />
-                    <stop offset="100%" stopColor="#40916c" />
-                  </linearGradient>
-                  <linearGradient id="leafG2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#2d6a4f" />
-                    <stop offset="60%" stopColor="#52b788" />
-                    <stop offset="100%" stopColor="#74c69d" />
-                  </linearGradient>
-                  <linearGradient id="leafG3" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#52b788" />
-                    <stop offset="100%" stopColor="#b7e4c7" />
-                  </linearGradient>
-                </defs>
-                {/* Tallo */}
-                <path d="M 240 0 C 200 40, 160 80, 130 140" stroke="#1b4332" strokeWidth="3.5" strokeLinecap="round" />
-                {/* Hojas dispuestas */}
-                <path d="M 240 20 C 180 30, 150 70, 170 110 C 210 110, 240 70, 240 20 Z" fill="url(#leafG1)" />
-                <path d="M 240 20 Q 200 65, 170 110" stroke="#74c69d" strokeWidth="1.2" opacity="0.6" />
-                <path d="M 200 60 C 140 75, 110 125, 125 175 C 165 170, 195 125, 200 60 Z" fill="url(#leafG2)" />
-                <path d="M 200 60 Q 160 115, 125 175" stroke="#95d5b2" strokeWidth="1.2" opacity="0.6" />
-                <path d="M 170 35 C 120 40, 95 80, 110 120 C 145 115, 170 80, 170 35 Z" fill="url(#leafG3)" />
-                <path d="M 170 35 Q 135 75, 110 120" stroke="#2d6a4f" strokeWidth="1" opacity="0.5" />
-                <path d="M 140 95 C 90 115, 70 155, 90 195 C 125 185, 145 145, 140 95 Z" fill="url(#leafG1)" />
-                <path d="M 140 95 Q 110 145, 90 195" stroke="#74c69d" strokeWidth="1.2" opacity="0.6" />
-                <path d="M 220 95 C 185 110, 170 140, 180 175 C 210 170, 225 140, 220 95 Z" fill="url(#leafG2)" />
-              </svg>
-            </div>
-
-            {/* Contenedor Relativo para los 5 Pasos y la Línea Ondulada */}
+            {/* Contenedor Relativo para las 5 Opiniones y la Línea Ondulada */}
             <div className="relative w-full z-10">
               
               {/* Línea Ondulada Conectora tipo Senoide (Visible en Desktop) */}
-              <div className="hidden lg:block absolute left-4 right-4 top-8 h-10 pointer-events-none -z-0">
+              <div className="hidden xl:block absolute left-4 right-4 top-8 h-10 pointer-events-none -z-0">
                 <svg viewBox="0 0 1000 60" preserveAspectRatio="none" className="w-full h-full fill-none">
                   <path
                     d="M 50,30 Q 150 5, 250 30 Q 350 55, 450 30 Q 550 5, 650 30 Q 750 55, 850 30 Q 950 5, 1000 30"
                     stroke="#52796f"
                     strokeWidth="1.8"
                     strokeDasharray="4 4"
-                    opacity="0.45"
+                    opacity="0.35"
                   />
                   {/* Puntos conectores sutiles */}
-                  <circle cx="150" cy="8" r="3" fill="#52796f" opacity="0.5" />
-                  <circle cx="350" cy="52" r="3" fill="#52796f" opacity="0.5" />
-                  <circle cx="550" cy="8" r="3" fill="#52796f" opacity="0.5" />
-                  <circle cx="750" cy="52" r="3" fill="#52796f" opacity="0.5" />
-                  <circle cx="950" cy="8" r="3" fill="#52796f" opacity="0.5" />
+                  <circle cx="150" cy="8" r="3" fill="#52796f" opacity="0.4" />
+                  <circle cx="350" cy="52" r="3" fill="#52796f" opacity="0.4" />
+                  <circle cx="550" cy="8" r="3" fill="#52796f" opacity="0.4" />
+                  <circle cx="750" cy="52" r="3" fill="#52796f" opacity="0.4" />
+                  <circle cx="950" cy="8" r="3" fill="#52796f" opacity="0.4" />
                 </svg>
               </div>
 
-              {/* Grilla de los 5 Pasos */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 xl:gap-8 items-start relative z-10 text-center">
+              {/* Grilla de las 5 Opiniones */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6 xl:gap-5 items-stretch relative z-10 text-center">
                 
-                {/* Paso 1: Diagnóstico */}
-                <div className="flex flex-col items-center group">
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#52796f]/35 flex items-center justify-center bg-white shadow-sm p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                        <Leaf className="w-6 h-6 stroke-[2]" />
+                {/* Opinión 1: Derecho Penal */}
+                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
+                  <div className="relative mb-2.5 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
+                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <User className="w-6 h-6 stroke-[2]" />
                       </div>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-black text-[#0f2a1d] font-sans mb-1">01</div>
-                  <h4 className="font-['Cinzel',serif] text-sm sm:text-base font-bold text-slate-800 mb-1.5">Diagnóstico</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal max-w-[160px] mx-auto">
-                    Escuchamos su caso, evaluamos la situación y trazamos los primeros objetivos.
+                  {/* Estrellas */}
+                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
+                    ))}
+                  </div>
+                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Carlos M.</h4>
+                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Penal · Flagrancia</div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
+                    “Acompañamiento inmediato en audiencia de flagrancia. La Ab. Sofía logró medidas sustitutivas con una defensa intachable.”
                   </p>
                 </div>
 
-                {/* Paso 2: Investigación */}
-                <div className="flex flex-col items-center group">
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#52796f]/35 flex items-center justify-center bg-white shadow-sm p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                        <PenTool className="w-5 h-5 stroke-[2]" />
+                {/* Opinión 2: Tránsito & Siniestros */}
+                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
+                  <div className="relative mb-2.5 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
+                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <User className="w-6 h-6 stroke-[2]" />
                       </div>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-black text-[#0f2a1d] font-sans mb-1">02</div>
-                  <h4 className="font-['Cinzel',serif] text-sm sm:text-base font-bold text-slate-800 mb-1.5">Investigación</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal max-w-[160px] mx-auto">
-                    Auditoría exhaustiva del expediente fiscal y acopio de pruebas de descargo.
+                  {/* Estrellas */}
+                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
+                    ))}
+                  </div>
+                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Ing. Roberto V.</h4>
+                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Tránsito & Siniestros</div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
+                    “Su peritaje técnico en el juzgado desvirtuó acusaciones infundadas. Profesionalismo y solvencia de primer nivel.”
                   </p>
                 </div>
 
-                {/* Paso 3: Estrategia */}
-                <div className="flex flex-col items-center group">
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#52796f]/35 flex items-center justify-center bg-white shadow-sm p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                        <Sprout className="w-6 h-6 stroke-[2]" />
+                {/* Opinión 3: Derecho Familiar */}
+                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
+                  <div className="relative mb-2.5 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
+                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <User className="w-6 h-6 stroke-[2]" />
                       </div>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-black text-[#0f2a1d] font-sans mb-1">03</div>
-                  <h4 className="font-['Cinzel',serif] text-sm sm:text-base font-bold text-slate-800 mb-1.5">Estrategia</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal max-w-[160px] mx-auto">
-                    Estructuración dogmática de la teoría del caso con rigor penal y pericial.
+                  {/* Estrellas */}
+                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
+                    ))}
+                  </div>
+                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Fam. Mendoza P.</h4>
+                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Familia · Tenencia</div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
+                    “Atención humana y firme en el proceso de tenencia y pensión. Resolvió la causa con total transparencia y rapidez.”
                   </p>
                 </div>
 
-                {/* Paso 4: Litigio Oral */}
-                <div className="flex flex-col items-center group">
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#52796f]/35 flex items-center justify-center bg-white shadow-sm p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                        <CheckCircle2 className="w-6 h-6 stroke-[2]" />
+                {/* Opinión 4: Derecho Laboral */}
+                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
+                  <div className="relative mb-2.5 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
+                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <User className="w-6 h-6 stroke-[2]" />
                       </div>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-black text-[#0f2a1d] font-sans mb-1">04</div>
-                  <h4 className="font-['Cinzel',serif] text-sm sm:text-base font-bold text-slate-800 mb-1.5">Litigio Oral</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal max-w-[160px] mx-auto">
-                    Defensa implacable y contundente en estrados ante jueces y tribunales.
+                  {/* Estrellas */}
+                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
+                    ))}
+                  </div>
+                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Lcda. Patricia S.</h4>
+                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Derecho Laboral</div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
+                    “Patrocinó mi reclamo por despido intempestivo con contundencia, asegurando el cobro íntegro de mis liquidaciones de ley.”
                   </p>
                 </div>
 
-                {/* Paso 5: Resultados */}
-                <div className="flex flex-col items-center group">
-                  <div className="relative mb-3 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#52796f]/35 flex items-center justify-center bg-white shadow-sm p-1">
-                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                        <TrendingUp className="w-6 h-6 stroke-[2]" />
+                {/* Opinión 5: Compañías de Transporte */}
+                <div className="flex flex-col items-center bg-stone-50/70 p-4 sm:p-5 rounded-2xl border border-stone-100 hover:border-[#52796f]/40 hover:bg-white hover:shadow-md transition-all group">
+                  <div className="relative mb-2.5 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#52796f]/30 flex items-center justify-center bg-white shadow-xs p-1">
+                      <div className="w-full h-full rounded-full bg-[#0f2a1d] text-emerald-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <User className="w-6 h-6 stroke-[2]" />
                       </div>
                     </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-black text-[#0f2a1d] font-sans mb-1">05</div>
-                  <h4 className="font-['Cinzel',serif] text-sm sm:text-base font-bold text-slate-800 mb-1.5">Resultados</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-normal max-w-[160px] mx-auto">
-                    Resolución favorable, tutela irrestricta de derechos y soporte continuo.
+                  {/* Estrellas */}
+                  <div className="flex items-center justify-center gap-0.5 text-[#e5c378] mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e5c378]" />
+                    ))}
+                  </div>
+                  <h4 className="font-['Cinzel',serif] text-sm font-bold text-slate-900 leading-tight mb-0.5">Operadora T.</h4>
+                  <div className="text-[10px] font-bold text-[#4a7c59] uppercase tracking-wider mb-2">Transporte · ANT</div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic">
+                    “Asesoría corporativa integral para la obtención y formalización de permisos ante la ANT. Gran capacidad técnica y seriedad.”
                   </p>
                 </div>
 
