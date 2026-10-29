@@ -60,8 +60,8 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
                 <strong className="text-slate-900 font-bold">{LAWYER_INFO.name}</strong>,{' '}
                 <span className="text-[#8c6721] font-bold">Experta en Derecho Penal y Tránsito</span>, con{' '}
                 <span className="font-semibold">{LAWYER_INFO.specialty}</span> (Universidad Casa Grande) y formación en la{' '}
-                <span className="font-semibold">{LAWYER_INFO.academicFormation}</span> — Credencial {LAWYER_INFO.credentials}.{' '}
-                {LAWYER_INFO.yearsExperience} años de experiencia en litigación penal, tránsito, transporte, derecho familiar y laboral.
+                <span className="font-semibold">{LAWYER_INFO.academicFormation}</span>.{' '}
+                Más de 5 años de experiencia en litigación penal, tránsito, transporte, derecho familiar y laboral.
               </p>
 
               {/* Fila de Botón */}
@@ -334,14 +334,14 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
                 <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
                   <Scale className="w-3.5 h-3.5" />
                 </div>
-                <span>Experta en Derecho Penal y Tránsito con {LAWYER_INFO.yearsExperience} años de experiencia</span>
+                <span>Experta en Derecho Penal y Tránsito con más de 5 años de experiencia</span>
               </div>
 
               <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">
                 <div className="w-7 h-7 rounded-full bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059] flex-shrink-0">
                   <GraduationCap className="w-3.5 h-3.5" />
                 </div>
-                <span>Maestrías en Derecho Procesal Penal & Constitucional (Casa Grande) · Uniandes ({LAWYER_INFO.credentials})</span>
+                <span>Maestrías en Derecho Procesal Penal & Constitucional (Casa Grande) · Grado en Uniandes</span>
               </div>
 
               <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 font-medium">

@@ -253,7 +253,7 @@ export const PracticeAreasTab: React.FC<PracticeAreasTabProps> = ({
                   </div>
                   <div className="text-left">
                     <div className="text-xs sm:text-sm font-bold text-[#101626]">Uniandes · Casa Grande</div>
-                    <div className="text-[11px] text-slate-500 leading-tight">Credencial {LAWYER_INFO.credentials}</div>
+                    <div className="text-[11px] text-slate-500 leading-tight">Formación & Maestrías</div>
                   </div>
                 </div>
 
@@ -503,7 +503,7 @@ export const PracticeAreasTab: React.FC<PracticeAreasTabProps> = ({
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
               En el Estudio Jurídico Segura Santana & Asociados, ejercemos una defensa técnica, ética e implacable.
               Bajo el liderazgo de la <strong className="text-slate-900">{LAWYER_INFO.name}</strong>,{' '}
-              {LAWYER_INFO.title}, con grado en la Universidad Autónoma Regional de Los Andes (Uniandes, Credencial {LAWYER_INFO.credentials})
+              {LAWYER_INFO.title}, con grado en la Universidad Autónoma Regional de Los Andes (Uniandes)
               y Maestrías en Derecho Procesal Penal y Constitucional por la Universidad Casa Grande.
             </p>
 

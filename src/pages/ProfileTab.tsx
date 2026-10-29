@@ -110,8 +110,8 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ onSelectTab, onOpenEmerg
                 <strong className="text-slate-900 font-bold">{LAWYER_INFO.name}</strong>,{' '}
                 <span className="text-[#9C6E52] font-semibold">{LAWYER_INFO.title}</span>, con{' '}
                 <span className="font-semibold">{LAWYER_INFO.specialty}</span> (Universidad Casa Grande) y formación en la{' '}
-                <span className="font-semibold">Universidad Autónoma Regional de Los Andes (Uniandes)</span> — Credencial {LAWYER_INFO.credentials}.
-                {LAWYER_INFO.yearsExperience} años de experiencia garantizando una defensa rigurosa e implacable.
+                <span className="font-semibold">Universidad Autónoma Regional de Los Andes (Uniandes)</span>.{' '}
+                Más de 5 años de experiencia garantizando una defensa rigurosa e implacable.
               </p>
 
               {/* Fila de Botones: Botón Píldora Sólido + Enlace con Flecha */}
@@ -573,7 +573,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ onSelectTab, onOpenEmerg
                   <span className="float-left font-['Cinzel',serif] text-5xl sm:text-6xl font-bold text-[#1c2237] leading-[0.8] mr-3 mt-1 select-none">
                     L
                   </span>
-                  a formación académica de cuarto nivel y la preparación constante constituyen el pilar fundamental sobre el que edificamos cada estrategia de defensa. Con {LAWYER_INFO.yearsExperience} años de experiencia profesional, la <strong>{LAWYER_INFO.name}</strong> combina la solidez de su formación de grado en la <strong>{LAWYER_INFO.academicFormation}</strong> (Credencial Foro de Abogados {LAWYER_INFO.credentials}) con <strong>Maestrías en Derecho Procesal Penal y Derecho Constitucional</strong> por la <strong>Universidad Casa Grande</strong>, consolidando su trayectoria como especialista litigante en todo el Ecuador.
+                  a formación académica de cuarto nivel y la preparación constante constituyen el pilar fundamental sobre el que edificamos cada estrategia de defensa. Con más de 5 años de experiencia profesional, la <strong>{LAWYER_INFO.name}</strong> combina la solidez de su formación de grado en la <strong>{LAWYER_INFO.academicFormation}</strong> con <strong>Maestrías en Derecho Procesal Penal y Derecho Constitucional</strong> por la <strong>Universidad Casa Grande</strong>, consolidando su trayectoria como especialista litigante en todo el Ecuador.
                 </div>
 
                 {/* Bloque de Cita con Comillas y Firma Cursiva */}
@@ -651,7 +651,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ onSelectTab, onOpenEmerg
                   </h4>
                   <p className="text-slate-600 text-xs sm:text-[13px] leading-relaxed">
                     Universidad Autónoma Regional de Los Andes.<br />
-                    <strong className="text-slate-800">Credencial Oficial: {LAWYER_INFO.credentials}</strong> ante el Foro de Abogados del Consejo de la Judicatura.
+                    <strong className="text-slate-800">Foro de Abogados del Consejo de la Judicatura</strong> del Ecuador con habilitación profesional plena.
                   </p>
                 </div>
 

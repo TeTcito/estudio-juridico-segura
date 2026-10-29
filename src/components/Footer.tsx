@@ -45,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenEmergencyModa
 
             <div className="flex items-center gap-2 text-xs text-[#e5c378] font-semibold pt-1">
               <Shield className="w-4 h-4 text-[#c5a059]" />
-              <span>Uniandes ({LAWYER_INFO.credentials}) · Casa Grande · 4 Años de Experiencia</span>
+              <span>Universidad Uniandes · Universidad Casa Grande · Más de 5 Años de Experiencia</span>
             </div>
           </div>
 

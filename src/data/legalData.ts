@@ -20,7 +20,6 @@ export const LAWYER_INFO = {
   title: "Experta en Derecho Penal y Tránsito",
   specialty: "Magíster en Derecho Procesal Penal & Constitucional",
   academicFormation: "Universidad Autónoma Regional de Los Andes (Uniandes)",
-  credentials: "23-2022-6",
   postgraduates: "Maestrías en Universidad Casa Grande",
   postgraduatesList: [
     "Maestría en Derecho Procesal Penal (Universidad Casa Grande)",
@@ -40,8 +39,8 @@ export const LAWYER_INFO = {
   city: "Cantón Buena Fe, Los Ríos · Cobertura y Traslados a Nivel Nacional",
   scheduleOffice: "8h00 am a 17h00 pm (Lunes a Viernes)",
   schedulePhone: "Atención Telefónica y Urgencias las 24 horas (24/7)",
-  yearsExperience: "4",
-  yearsExperienceText: "4 Años de Experiencia",
+  yearsExperience: "+5",
+  yearsExperienceText: "Más de 5 Años de Experiencia",
   statSuccessRate: "98%",
   statFlagrancies: "300+",
   whatsappMessageUrgent: "Hola Ab. Sofía Segura Santana, requiero asistencia legal penal urgente por una detención/caso penal.",
