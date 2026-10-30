@@ -15,7 +15,7 @@ import { LAWYER_INFO } from '../data/legalData';
 
 // Images
 import sofiaCutout from '../assets/images/sofia-profile-hero.png';
-import sofiaWorkingLandscape from '../assets/images/sofia-working-landscape.jpg';
+import sofiaOfficeExecutive from '../assets/images/sofia-office-executive.jpg';
 import portraitFormal from '../assets/images/sofia-profile-postgrados.jpg';
 import methodologyInvestigationForensic from '../assets/images/methodology-investigation-forensic.jpg';
 import profileCaseInvestigation from '../assets/images/profile-case-investigation.jpg';
@@ -200,9 +200,9 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ onSelectTab, onOpenEmerg
               <div className="lg:col-span-5 relative">
                 <div className="rounded-[22px] sm:rounded-[30px] overflow-hidden aspect-[4/3] sm:aspect-[16/11] shadow-md border border-stone-100 bg-stone-50">
                   <img
-                    src={sofiaWorkingLandscape}
-                    alt="Ab. Sofía Segura Santana analizando expediente en despacho"
-                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                    src={sofiaOfficeExecutive}
+                    alt="Ab. Sofía Segura Santana en su despacho"
+                    className="w-full h-full object-cover object-top transform hover:scale-105 transition-transform duration-700"
                   />
                 </div>
               </div>

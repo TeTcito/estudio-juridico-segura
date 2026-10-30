@@ -191,7 +191,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-end">
             
             {/* Columna Izquierda: Titular, Párrafo, Botones y Tarjetas */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left z-10 pb-10 sm:pb-14 lg:pb-16">
+            <div className="lg:col-span-7 xl:col-span-6 flex flex-col items-start text-left z-10 pb-10 sm:pb-14 lg:pb-16">
               
               {/* Título Principal */}
               <h1 className="font-['Cinzel',serif] text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[56px] font-black text-[#1c2237] leading-[1.14] sm:leading-[1.12] tracking-tight mb-4 sm:mb-5 animate-fade-in-up">
@@ -281,16 +281,16 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
             </div>
 
             {/* Columna Derecha: Silueta y Máscara a ras del borde inferior */}
-            <div className="lg:col-span-5 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200 overflow-hidden">
+            <div className="lg:col-span-5 xl:col-span-6 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200 overflow-hidden">
               
               {/* La Máscara de Color (Contenedor redondeado arriba, a ras abajo) */}
-              <div className="absolute w-[80%] sm:w-[85%] md:w-[80%] lg:w-[88%] max-w-[420px] xl:max-w-[450px] h-[78%] sm:h-[82%] bottom-0 rounded-t-[44px] sm:rounded-t-[56px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
+              <div className="absolute w-[88%] sm:w-[90%] md:w-[88%] lg:w-[92%] max-w-[560px] lg:max-w-[640px] xl:max-w-[720px] 2xl:max-w-[780px] h-[82%] sm:h-[85%] bottom-0 rounded-t-[54px] sm:rounded-t-[68px] lg:rounded-t-[84px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
 
-              {/* Imagen con Fondo Transparente: De la mitad hacia arriba, más grande y bajada al ras */}
+              {/* Imagen con Fondo Transparente: 3 veces su tamaño actual, encuadre simétrico de cintura hacia arriba */}
               <img
                 src={sofiaCutout}
                 alt="Ab. Sofía Segura Santana - Abogada Penalista y Tránsito"
-                className="relative z-10 w-auto max-h-[440px] sm:max-h-[520px] md:max-h-[580px] lg:max-h-[640px] xl:max-h-[700px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.35)] block align-bottom m-0 p-0 translate-y-3 sm:translate-y-4 lg:translate-y-5"
+                className="relative z-10 w-full max-w-[520px] sm:max-w-[600px] md:max-w-[660px] lg:max-w-[720px] xl:max-w-[800px] 2xl:max-w-[860px] h-auto object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.38)] block align-bottom m-0 p-0 translate-y-2 sm:translate-y-3 lg:translate-y-4"
               />
 
             </div>
