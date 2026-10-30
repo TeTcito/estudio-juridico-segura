@@ -34,7 +34,7 @@ import specialtyTrafficExpert from '../assets/images/specialty-traffic-expert.jp
 import specialtyTransportCompanies from '../assets/images/specialty-transport-companies.jpg';
 import specialtyFamilyLaw from '../assets/images/specialty-family-law.jpg';
 import specialtyLaborLaw from '../assets/images/specialty-labor-law.jpg';
-import practiceCtaEmergency from '../assets/images/practice-cta-emergency.jpg';
+import practiceCtaEmergency from '../assets/images/practice-cta-emergency.png';
 
 interface PracticeAreasTabProps {
   onOpenEmergencyModal: () => void;
