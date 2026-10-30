@@ -292,17 +292,17 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
 
             </div>
 
-            {/* Columna Derecha: Silueta y Máscara a ras del borde inferior */}
+            {/* Columna Derecha: Silueta y Máscara a ras del borde inferior (Tamaño reducido a la mitad) */}
             <div className="lg:col-span-5 xl:col-span-6 relative flex items-end justify-center self-end leading-none animate-fade-in delay-200 overflow-hidden">
               
               {/* La Máscara de Color (Contenedor redondeado arriba, a ras abajo) */}
-              <div className="absolute w-[88%] sm:w-[90%] md:w-[88%] lg:w-[92%] max-w-[560px] lg:max-w-[640px] xl:max-w-[720px] 2xl:max-w-[780px] h-[82%] sm:h-[85%] bottom-0 rounded-t-[54px] sm:rounded-t-[68px] lg:rounded-t-[84px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_20px_45px_rgba(197,160,89,0.4)]" />
+              <div className="absolute w-[85%] sm:w-[88%] md:w-[85%] lg:w-[88%] max-w-[280px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-[380px] xl:max-w-[420px] 2xl:max-w-[450px] h-[82%] sm:h-[85%] bottom-0 rounded-t-[36px] sm:rounded-t-[44px] lg:rounded-t-[54px] bg-gradient-to-br from-[#d4af37] via-[#c5a059] to-[#9e7a2b] shadow-[0_15px_35px_rgba(197,160,89,0.35)]" />
 
-              {/* Imagen con Fondo Transparente: 3 veces su tamaño actual, encuadre simétrico de cintura hacia arriba */}
+              {/* Imagen con Fondo Transparente: Tamaño reducido a la mitad con proporciones simétricas */}
               <img
                 src={sofiaCutout}
                 alt="Ab. Sofía Segura Santana - Abogada Penalista y Tránsito"
-                className="relative z-10 w-full max-w-[520px] sm:max-w-[600px] md:max-w-[660px] lg:max-w-[720px] xl:max-w-[800px] 2xl:max-w-[860px] h-auto object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.38)] block align-bottom m-0 p-0 translate-y-2 sm:translate-y-3 lg:translate-y-4"
+                className="relative z-10 w-full max-w-[260px] sm:max-w-[300px] md:max-w-[330px] lg:max-w-[360px] xl:max-w-[400px] 2xl:max-w-[430px] h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.32)] block align-bottom m-0 p-0 translate-y-1 sm:translate-y-1.5 lg:translate-y-2"
               />
 
             </div>
