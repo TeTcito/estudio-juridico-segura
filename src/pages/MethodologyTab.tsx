@@ -31,7 +31,7 @@ import methodologyInvestigationForensic from '../assets/images/methodology-inves
 import methodologyOralTrial from '../assets/images/methodology-oral-trial.jpg';
 import methodologyTrafficForensic from '../assets/images/methodology-traffic-forensic.jpg';
 import methodologyTransportAudit from '../assets/images/methodology-transport-audit.jpg';
-import methodologyMediationTable from '../assets/images/methodology-mediation-table.jpg';
+import methodologyMediationTable from '../assets/images/methodology-mediation-table.png';
 import lawLibraryPrestige from '../assets/images/law-library-prestige.jpg';
 
 interface MethodologyTabProps {
