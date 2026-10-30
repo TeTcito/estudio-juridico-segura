@@ -21,7 +21,7 @@ import type { TabKey } from '../components/Header';
 import { LAWYER_INFO } from '../data/legalData';
 
 // Images
-import heroMethodologyBg from '../assets/images/hero-methodology-bg.jpg';
+import heroMethodologyBg from '../assets/images/hero-methodology-bg.png';
 import legalTeamMeeting from '../assets/images/legal-team-meeting.jpg';
 import clientAvatar1 from '../assets/images/client-avatar-1.jpg';
 import clientAvatar2 from '../assets/images/client-avatar-2.jpg';
