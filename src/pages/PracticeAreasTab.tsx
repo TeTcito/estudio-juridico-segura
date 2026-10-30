@@ -29,7 +29,7 @@ import sofiaCutout from '../assets/images/sofia-profile-hero.png';
 import portraitFormal from '../assets/images/sofia-profile-postgrados.jpg';
 import practiceAreasHeader from '../assets/images/practice-areas-header.jpg';
 import courtroomJustice from '../assets/images/courtroom-justice.jpg';
-import flagranciasDefensa247 from '../assets/images/flagrancias-defensa-24-7.jpg';
+import flagranciasDefensa247 from '../assets/images/flagrancias-defensa-24-7.png';
 import specialtyTrafficExpert from '../assets/images/specialty-traffic-expert.jpg';
 import specialtyTransportCompanies from '../assets/images/specialty-transport-companies.jpg';
 import specialtyFamilyLaw from '../assets/images/specialty-family-law.jpg';
