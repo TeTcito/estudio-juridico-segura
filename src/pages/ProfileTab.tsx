@@ -14,9 +14,9 @@ import type { TabKey } from '../components/Header';
 import { LAWYER_INFO } from '../data/legalData';
 
 // Images
-import sofiaCutout from '../assets/images/sofia-cutout-transparent.png';
+import sofiaCutout from '../assets/images/sofia-profile-hero.png';
 import sofiaWorkingLandscape from '../assets/images/sofia-working-landscape.jpg';
-import portraitFormal from '../assets/images/sofia-portrait-formal.jpg';
+import portraitFormal from '../assets/images/sofia-profile-postgrados.jpg';
 import methodologyInvestigationForensic from '../assets/images/methodology-investigation-forensic.jpg';
 import profileCaseInvestigation from '../assets/images/profile-case-investigation.jpg';
 import specialtyTrafficExpert from '../assets/images/specialty-traffic-expert.jpg';
