@@ -21,63 +21,15 @@ import {
   X,
   Check,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Share2,
+  Copy,
+  Sparkles
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import type { TabKey } from '../components/Header';
 import { LAWYER_INFO } from '../data/legalData';
-
-export interface ReviewItem {
-  id: string;
-  name: string;
-  matter: string;
-  location: string;
-  comment: string;
-  rating: number;
-}
-
-const DEFAULT_REVIEWS: ReviewItem[] = [
-  {
-    id: "rev-1",
-    name: "Carlos M.",
-    matter: "Penal · Flagrancia",
-    location: "Buena Fe",
-    comment: "Acompañamiento inmediato en audiencia de flagrancia. La Ab. Sofía logró medidas sustitutivas con una defensa intachable.",
-    rating: 5,
-  },
-  {
-    id: "rev-2",
-    name: "Ing. Roberto V.",
-    matter: "Tránsito & Siniestros",
-    location: "Quevedo",
-    comment: "Su peritaje técnico en el juzgado desvirtuó acusaciones infundadas. Profesionalismo y solvencia de primer nivel.",
-    rating: 5,
-  },
-  {
-    id: "rev-3",
-    name: "Fam. Mendoza P.",
-    matter: "Familia · Tenencia",
-    location: "Buena Fe",
-    comment: "Atención humana y firme en el proceso de tenencia y pensión. Resolvió la causa con total transparencia y rapidez.",
-    rating: 5,
-  },
-  {
-    id: "rev-4",
-    name: "Lcda. Patricia S.",
-    matter: "Derecho Laboral",
-    location: "Los Ríos",
-    comment: "Patrocinó mi reclamo por despido intempestivo con contundencia, asegurando el cobro íntegro de mis liquidaciones de ley.",
-    rating: 5,
-  },
-  {
-    id: "rev-5",
-    name: "Operadora T.",
-    matter: "Transporte · ANT",
-    location: "Los Ríos",
-    comment: "Asesoría corporativa integral para la obtención y formalización de permisos ante la ANT. Gran capacidad técnica y seriedad.",
-    rating: 5,
-  },
-];
+import { getStoredReviews, saveNewReview, type ReviewItem } from '../data/reviewsData';
 
 // Images
 import sofiaCutout from '../assets/images/sofia-standing-cutout.png';
@@ -96,52 +48,87 @@ interface HomeTabProps {
 export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyModal }) => {
   // Estado de Opiniones / Reseñas (persiste en localStorage)
   const [reviews, setReviews] = useState<ReviewItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('estudio_juridico_reviews');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed;
-          }
-        }
-      } catch {
-        // Fallback
-      }
-    }
-    return DEFAULT_REVIEWS;
+    return getStoredReviews();
   });
 
-  // Estado del Modal de Opinión
+  // Estado del Modal de Opinión y Modal de Compartir
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [newlyAddedId, setNewlyAddedId] = useState<string | null>(null);
+
   const [revAuthor, setRevAuthor] = useState('');
-  const [revMatter, setRevMatter] = useState('Derecho Penal');
+  const [revMatter, setRevMatter] = useState('Derecho Penal · Flagrancia');
   const [revLocation, setRevLocation] = useState('Buena Fe');
   const [revComment, setRevComment] = useState('');
   const [revRating, setRevRating] = useState(5);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+  // Copiar enlace directo al formulario
+  const handleCopyLink = () => {
+    const shareUrl = typeof window !== 'undefined'
+      ? `${window.location.origin}/?opinar=true`
+      : 'https://abogadasofiasegura.web.app/?opinar=true';
+
+    const fallbackCopy = (text: string) => {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2500);
+      } catch (err) {
+        console.error('Error al copiar enlace:', err);
+      }
+      document.body.removeChild(textArea);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2500);
+      }).catch(() => {
+        fallbackCopy(shareUrl);
+      });
+    } else {
+      fallbackCopy(shareUrl);
+    }
+  };
+
+  // Compartir por WhatsApp directo al cliente
+  const handleWhatsAppShare = () => {
+    const shareUrl = typeof window !== 'undefined'
+      ? `${window.location.origin}/?opinar=true`
+      : 'https://abogadasofiasegura.web.app/?opinar=true';
+    const message = `Estimado/a cliente, para el Estudio Jurídico de la Ab. Sofía Segura Santana ha sido un verdadero honor patrocinarle. Le invitamos a compartir su testimonio y calificación en nuestro sitio web oficial ingresando aquí: ${shareUrl}\n\n¡Muchas gracias por su confianza!`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!revAuthor.trim() || !revComment.trim()) return;
 
+    const newId = `rev-${Date.now()}`;
     const item: ReviewItem = {
-      id: `rev-${Date.now()}`,
+      id: newId,
       name: revAuthor.trim(),
       matter: revMatter,
       location: revLocation.trim() || 'Ecuador',
       comment: revComment.trim(),
       rating: revRating || 5,
+      createdAt: new Date().toISOString(),
+      isNew: true,
     };
 
-    const updated = [item, ...reviews];
+    const updated = saveNewReview(item);
     setReviews(updated);
-    try {
-      localStorage.setItem('estudio_juridico_reviews', JSON.stringify(updated));
-    } catch {
-      // ignore storage error
-    }
+    setNewlyAddedId(newId);
 
     setReviewSubmitted(true);
     setTimeout(() => {
@@ -151,8 +138,33 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
       setRevComment('');
       setRevLocation('Buena Fe');
       setRevRating(5);
+
+      if (carouselRef.current) {
+        carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      }
     }, 1200);
   };
+
+  // Sincronizar opiniones si se crearon desde otra pestaña o página
+  useEffect(() => {
+    const handleStorage = () => {
+      setReviews(getStoredReviews());
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  // Si la URL contiene el hash #opiniones, desplazarse suavemente
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#opiniones') {
+      setTimeout(() => {
+        const el = document.getElementById('opiniones');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 200);
+    }
+  }, []);
 
   // Referencia y navegación del carrusel de opiniones
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -698,7 +710,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
           SECCIÓN 6: OPINIONES & TESTIMONIOS VERIFICADOS DE CLIENTES
           Compacto, paleta azul navy/dorado, ancho completo, pegado al footer
           ========================================================================= */}
-      <section className="relative w-full bg-white border-t border-slate-200/90 overflow-hidden mb-0 pb-0">
+      <section id="opiniones" className="relative w-full bg-white border-t border-slate-200/90 overflow-hidden mb-0 pb-0 scroll-mt-20">
         <div className="w-full flex flex-col lg:flex-row items-stretch relative">
           
           {/* Columna Izquierda: Panel Azul Noche Institucional (#101626) con Borde Ondulado Orgánico */}
@@ -728,14 +740,25 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
               </p>
             </div>
 
-            {/* Botón: Dejar Opinión */}
-            <div className="pt-2 lg:pt-0">
+            {/* Botones: Dejar Opinión y Compartir Enlace a Clientes */}
+            <div className="pt-2 lg:pt-0 flex flex-wrap items-center gap-2">
               <button
+                type="button"
                 onClick={() => setIsReviewModalOpen(true)}
-                className="px-6 py-2.5 rounded-full bg-[#c5a059] hover:bg-[#b38b39] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group w-fit transform hover:-translate-y-0.5 active:translate-y-0"
+                className="px-5 py-2.5 rounded-full bg-[#c5a059] hover:bg-[#b38b39] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2 group w-fit transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 <span>Dejar Opinión</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white transition-transform group-hover:translate-x-1" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsShareModalOpen(true)}
+                title="Compartir enlace de opiniones a un cliente"
+                className="px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-[#c5a059]/40 hover:border-[#c5a059] text-white font-semibold text-xs transition-all shadow-xs inline-flex items-center gap-1.5 group transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Share2 className="w-3.5 h-3.5 text-[#c5a059] group-hover:scale-110 transition-transform" />
+                <span>Compartir</span>
               </button>
             </div>
 
@@ -806,45 +829,62 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
                 className="flex items-stretch gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory py-1 px-0.5 no-scrollbar"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {reviews.map((rev) => (
-                  <div
-                    key={rev.id}
-                    className="flex-shrink-0 w-[235px] sm:w-[250px] xl:w-[240px] 2xl:w-[255px] snap-start flex flex-col justify-between bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 hover:border-[#c5a059]/60 hover:shadow-md transition-all group text-center"
-                  >
-                    <div>
-                      {/* Avatar de Cuenta sin Foto */}
-                      <div className="relative mb-2 flex items-center justify-center">
-                        <div className="w-11 h-11 rounded-full border-2 border-[#c5a059]/35 flex items-center justify-center bg-white shadow-xs p-1">
-                          <div className="w-full h-full rounded-full bg-[#101626] text-[#c5a059] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                            <User className="w-4 h-4 stroke-[2]" />
+                {reviews.map((rev) => {
+                  const isHighlighted = rev.isNew || rev.id === newlyAddedId;
+                  return (
+                    <div
+                      key={rev.id}
+                      className={`flex-shrink-0 w-[235px] sm:w-[250px] xl:w-[240px] 2xl:w-[255px] snap-start flex flex-col justify-between bg-white p-3.5 sm:p-4 rounded-2xl border transition-all group text-center relative ${
+                        isHighlighted
+                          ? 'border-[#c5a059] ring-2 ring-[#c5a059]/40 shadow-md bg-amber-50/25'
+                          : 'border-slate-200/80 hover:border-[#c5a059]/60 hover:shadow-md'
+                      }`}
+                    >
+                      {/* Badge si es opinión recién añadida */}
+                      {isHighlighted && (
+                        <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#c5a059] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs flex items-center gap-1 z-20 whitespace-nowrap">
+                          <Sparkles className="w-2.5 h-2.5" />
+                          <span>¡Nueva Opinión!</span>
+                        </div>
+                      )}
+
+                      <div>
+                        {/* Avatar de Cuenta sin Foto */}
+                        <div className="relative mb-2 flex items-center justify-center">
+                          <div className={`w-11 h-11 rounded-full border-2 flex items-center justify-center bg-white shadow-xs p-1 ${
+                            isHighlighted ? 'border-[#c5a059]' : 'border-[#c5a059]/35'
+                          }`}>
+                            <div className="w-full h-full rounded-full bg-[#101626] text-[#c5a059] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                              <User className="w-4 h-4 stroke-[2]" />
+                            </div>
                           </div>
                         </div>
+
+                        {/* Estrellas Doradas */}
+                        <div className="flex items-center justify-center gap-0.5 text-[#c5a059] mb-1">
+                          {[...Array(rev.rating || 5)].map((_, i) => (
+                            <Star key={i} className="w-3 h-3 fill-[#c5a059]" />
+                          ))}
+                        </div>
+
+                        <h4 className="font-['Cinzel',serif] text-xs sm:text-sm font-bold text-slate-900 leading-tight mb-0.5 truncate">
+                          {rev.name}
+                        </h4>
+                        <div className="text-[10px] font-bold text-[#aa8640] uppercase tracking-wider mb-2">
+                          {rev.matter}
+                        </div>
+
+                        <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic line-clamp-4">
+                          “{rev.comment}”
+                        </p>
                       </div>
 
-                      {/* Estrellas Doradas */}
-                      <div className="flex items-center justify-center gap-0.5 text-[#c5a059] mb-1">
-                        {[...Array(rev.rating || 5)].map((_, i) => (
-                          <Star key={i} className="w-3 h-3 fill-[#c5a059]" />
-                        ))}
+                      <div className="pt-2 mt-2 border-t border-slate-100 text-[9px] text-slate-400 font-medium">
+                        📍 {rev.location}
                       </div>
-
-                      <h4 className="font-['Cinzel',serif] text-xs sm:text-sm font-bold text-slate-900 leading-tight mb-0.5 truncate">
-                        {rev.name}
-                      </h4>
-                      <div className="text-[10px] font-bold text-[#aa8640] uppercase tracking-wider mb-2">
-                        {rev.matter}
-                      </div>
-
-                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal italic line-clamp-4">
-                        “{rev.comment}”
-                      </p>
                     </div>
-
-                    <div className="pt-2 mt-2 border-t border-slate-100 text-[9px] text-slate-400 font-medium">
-                      📍 {rev.location}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
             </div>
@@ -1001,6 +1041,95 @@ export const HomeTab: React.FC<HomeTabProps> = ({ onSelectTab, onOpenEmergencyMo
               </div>
             )}
 
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          MODAL: COMPARTIR FORMULARIO DE OPINIONES CON CLIENTES
+          ========================================================================= */}
+      {isShareModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md rounded-3xl bg-white border border-slate-100 p-6 sm:p-7 shadow-2xl text-left">
+            {/* Botón Cerrar */}
+            <button
+              onClick={() => setIsShareModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors"
+              aria-label="Cerrar modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Icono y Encabezado */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-11 h-11 rounded-2xl bg-[#c5a059]/15 flex items-center justify-center text-[#c5a059]">
+                <Share2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-['Cinzel',serif] text-lg sm:text-xl font-bold text-[#101626]">
+                  Compartir con Clientes
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  Envíe este enlace a sus clientes para que dejen su testimonio.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Al abrir este enlace, su cliente verá directamente el formulario exclusivo de opinión. Al enviarlo, será redirigido al inicio donde podrá ver su reseña publicada en el carrusel.
+            </p>
+
+            {/* Enlace para copiar */}
+            <div className="mb-4">
+              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                Enlace Directo
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={
+                    typeof window !== 'undefined'
+                      ? `${window.location.origin}/?opinar=true`
+                      : 'https://abogadasofiasegura.web.app/?opinar=true'
+                  }
+                  className="flex-1 px-3 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 select-all font-mono focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
+                    linkCopied
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-[#101626] hover:bg-[#1c2237] text-white'
+                  }`}
+                >
+                  {linkCopied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Copiado</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-[#c5a059]" />
+                      <span>Copiar</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Botón WhatsApp Directo */}
+            <div className="pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={handleWhatsAppShare}
+                className="w-full py-3 px-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Enviar por WhatsApp al Cliente</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

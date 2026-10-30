@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header, type TabKey } from './components/Header';
 import { Footer } from './components/Footer';
 import { EmergencyModal } from './components/EmergencyModal';
@@ -7,12 +7,92 @@ import { ProfileTab } from './pages/ProfileTab';
 import { PracticeAreasTab } from './pages/PracticeAreasTab';
 import { MethodologyTab } from './pages/MethodologyTab';
 import { ContactTab } from './pages/ContactTab';
+import { ReviewFormPage } from './pages/ReviewFormPage';
 import { WhatsAppIcon } from './components/WhatsAppIcon';
 import { LAWYER_INFO } from './data/legalData';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<TabKey>('inicio');
+  const [activeTab, setActiveTab] = useState<TabKey>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab') as TabKey;
+      if (tabParam && ['inicio', 'perfil', 'servicios', 'metodologia', 'contacto'].includes(tabParam)) {
+        return tabParam;
+      }
+    }
+    return 'inicio';
+  });
+
   const [emergencyModalOpen, setEmergencyModalOpen] = useState(false);
+
+  // Detección de apertura directa del formulario de opinión (por enlace compartido /?opinar=true)
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const hasParam = params.get('opinar') === 'true' || params.get('dejar-opinion') === 'true';
+      const hasHash = window.location.hash === '#opinar' || window.location.hash === '#dejar-opinion';
+      return hasParam || hasHash;
+    }
+    return false;
+  });
+
+  // Escuchar cambios de hash o URL
+  useEffect(() => {
+    const checkUrlForReviewForm = () => {
+      const params = new URLSearchParams(window.location.search);
+      const hasParam = params.get('opinar') === 'true' || params.get('dejar-opinion') === 'true';
+      const hasHash = window.location.hash === '#opinar' || window.location.hash === '#dejar-opinion';
+      if (hasParam || hasHash) {
+        setIsReviewFormOpen(true);
+      }
+    };
+    window.addEventListener('popstate', checkUrlForReviewForm);
+    window.addEventListener('hashchange', checkUrlForReviewForm);
+    return () => {
+      window.removeEventListener('popstate', checkUrlForReviewForm);
+      window.removeEventListener('hashchange', checkUrlForReviewForm);
+    };
+  }, []);
+
+  // Redirección al completar la opinión: hacia la pestaña inicio y scroll a la sección #opiniones
+  const handleReviewComplete = () => {
+    setIsReviewFormOpen(false);
+    setActiveTab('inicio');
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('opinar');
+      url.searchParams.delete('dejar-opinion');
+      window.history.replaceState({}, '', url.pathname + '#opiniones');
+
+      setTimeout(() => {
+        const el = document.getElementById('opiniones');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    }
+  };
+
+  const handleReviewCancel = () => {
+    setIsReviewFormOpen(false);
+    setActiveTab('inicio');
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('opinar');
+      url.searchParams.delete('dejar-opinion');
+      window.history.replaceState({}, '', url.pathname);
+    }
+  };
+
+  // Si el cliente abrió el enlace directo para opinar, mostrar la página del formulario
+  if (isReviewFormOpen) {
+    return (
+      <ReviewFormPage
+        onComplete={handleReviewComplete}
+        onCancel={handleReviewCancel}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-800 selection:bg-[#c5a059] selection:text-white">
