@@ -25,8 +25,8 @@ import type { TabKey } from '../components/Header';
 import { LAWYER_INFO, DETAILED_SPECIALTIES } from '../data/legalData';
 
 // Images
-import sofiaCutout from '../assets/images/sofia-lawyer-cutout.png';
-import portraitFormal from '../assets/images/sofia-portrait-formal.jpg';
+import sofiaCutout from '../assets/images/sofia-profile-hero.png';
+import portraitFormal from '../assets/images/sofia-profile-postgrados.jpg';
 import practiceAreasHeader from '../assets/images/practice-areas-header.jpg';
 import courtroomJustice from '../assets/images/courtroom-justice.jpg';
 import flagranciasDefensa247 from '../assets/images/flagrancias-defensa-24-7.jpg';
@@ -484,7 +484,7 @@ export const PracticeAreasTab: React.FC<PracticeAreasTabProps> = ({
               <img
                 src={sofiaCutout}
                 alt="Ab. Sofía Segura Santana"
-                className="relative z-10 w-full max-w-[320px] sm:max-w-[360px] -mt-12 object-contain drop-shadow-2xl"
+                className="relative z-10 w-full max-w-[300px] sm:max-w-[340px] -mt-10 object-contain drop-shadow-2xl [mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)]"
               />
             </div>
           </div>
